@@ -7,6 +7,10 @@
     <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico?1">
     <title>NAVER</title>
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
         #wrap {
             text-align: center;
         }
@@ -14,13 +18,21 @@
             width: 1280px;
             background-color: yellow;
         }
+        #header-hamburger {
+            margin-top: 18px;
+            background-color: blue;
+            width: 46px;
+            height: 46px;
+        }
     </style>
 </head>
 <body>
     <!-- id는 각 div를 구분하기 위함!-->
     <div id = "wrap">
-        <div id = "wrap-center">
+        <!-- display의 inline-block을 사용해야 양 옆에 정확히 패딩이 생기고 가운데 정렬이 된다!-->
+        <div id = "wrap-center" style = "display: inline-block;">
             <div id = "header"></div>
+                <div id = "header-hamburger"></div>
             <div id = "search"></div>
             <div id = "nav"></div>
             <div id = "main"></div>
