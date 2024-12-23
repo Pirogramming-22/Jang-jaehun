@@ -107,6 +107,7 @@
             content: ''; /* before를 사용하면 content는 반드시 있어야 함!*/
             left: 1px;
             right: 1px;
+            z-index: 0;
             width: 44px;
             height: 44px;
             background-color: var(--color_option_bg);
@@ -122,9 +123,23 @@
             width: 26px;
             height: 26px;
             display: inline-block;
+            z-index: 1;
+            position: relative;
         }
         #main {
             height: 2000px;
+        }
+        .blind {
+            /*
+                display: none;
+                위와 같이 설정하면 동일하게 동작하지만 시각 장애인들이 사용하는 스크린 리더기에서 읽지 못하는 문제가 발생해 아래와 같이 상세하게 작성해야 함!  
+            */
+            position: absolute;
+            clip: rect(0 0 0 0);
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -135,9 +150,9 @@
         <div id = "wrap-center">
             <div id = "header">
                 <button id = "header-hamburger">
-                    <div>
-
-                    </div>
+                    <!-- before -->
+                    <div></div>
+                    <span class="blind">확장 영역</span>
                 </button>
             </div>
             <div id = "search"></div>
