@@ -80,6 +80,7 @@
         }
         #wrap {
             text-align: center;
+            position: relative;
         }
         #wrap-center {
             width: 1280px;
@@ -88,17 +89,26 @@
         }
         #header {
             text-align: left;
+            position: relative;
         }
         #header-hamburger {
-            margin-top: 18px;
+            position: absolute;
+            top: 18px;
+            left: -10px;
             padding: 10px;
             display: inline-block;
             background: none;
             border: none;
             cursor: pointer;
         }
-        #header-hamburger:hover{
+        #header-hamburger:hover::before{
             /* hover : 마우스를 올리면 */
+            position: absolute;
+            content: ''; /* before를 사용하면 content는 반드시 있어야 함!*/
+            left: 1px;
+            right: 1px;
+            width: 44px;
+            height: 44px;
             background-color: var(--color_option_bg);
             border-radius: 50%;
         }
