@@ -7,6 +7,10 @@
     <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico?1">
     <title>NAVER</title>
     <style>
+        /* 모든 태그에 적용 */
+        * {
+            box-sizing: border-box;
+        }
         :root {
             /* 변수처럼 사용 가능 */
             --color_title: #080808;
@@ -91,17 +95,17 @@
             text-align: left;
             position: relative;
         }
-        #header-hamburger {
+        #header-hamburger, #header-naverpay, #header-notice {
             position: absolute;
             top: 18px;
-            left: -10px;
             padding: 10px;
             display: inline-block;
             background: none;
             border: none;
             cursor: pointer;
         }
-        #header-hamburger:hover::before{
+
+        #header-hamburger:hover::before, #header-naverpay:hover::before, #header-notice:hover::before {
             /* hover : 마우스를 올리면 */
             position: absolute;
             content: ''; /* before를 사용하면 content는 반드시 있어야 함!*/
@@ -113,18 +117,44 @@
             background-color: var(--color_option_bg);
             border-radius: 50%;
         }
-        #header-hamburger > div {
+
+        #header-hamburger > div, #header-naverpay > div, #header-notice > div {
             background-image: url(./sp_main.png);
             background-repeat: no-repeat;
             /* 사이즈 정하기 */
             background-size: 463px 440px;
-            /* 위치 정하기 */
-            background-position: -311px -166px;
             width: 26px;
             height: 26px;
             display: inline-block;
             z-index: 1;
             position: relative;
+        }
+        #header-hamburger {
+            left: -10px;
+        }
+        
+        #header-hamburger > div {
+            /* 위치 정하기 */
+            background-position: -311px -166px;
+        }
+
+        #header-naverpay {
+            right: 42px;
+            padding: 10px 8px;
+        }
+        
+        #header-naverpay > div {
+            /* 위치 정하기 */
+            background-position: -248px -260px;
+            width: 30;
+        }
+        #header-notice {
+            right: -10px;
+        }
+
+        #header-notice > div {
+            /* 위치 정하기 */
+            background-position: -311px -232px;
         }
         #main {
             height: 2000px;
@@ -153,6 +183,16 @@
                     <!-- before -->
                     <div></div>
                     <span class="blind">확장 영역</span>
+                </button>
+                <button id = "header-naverpay">
+                    <!-- before -->
+                    <div></div>
+                    <span class="blind">네이버 페이</span>
+                </button>
+                <button id = "header-notice">
+                    <!-- before -->
+                    <div></div>
+                    <span class="blind">알림</span>
                 </button>
             </div>
             <div id = "search"></div>
