@@ -17,12 +17,29 @@
         #wrap-center {
             width: 1280px;
             background-color: yellow;
+            display: inline-block;
+        }
+        #header {
+            text-align: left;
         }
         #header-hamburger {
             margin-top: 18px;
-            background-color: blue;
-            width: 46px;
-            height: 46px;
+            padding: 10px;
+            display: inline-block;
+        }
+        #header-hamburger > div {
+            background-image: url(./sp_main.png);
+            background-repeat: no-repeat;
+            /* 사이즈 정하기 */
+            background-size: 463px 440px;
+            /* 위치 정하기 */
+            background-position: -311px -166px;
+            width: 26px;
+            height: 26px;
+            display: inline-block;
+        }
+        #main {
+            height: 2000px;
         }
     </style>
 </head>
@@ -30,9 +47,14 @@
     <!-- id는 각 div를 구분하기 위함!-->
     <div id = "wrap">
         <!-- display의 inline-block을 사용해야 양 옆에 정확히 패딩이 생기고 가운데 정렬이 된다!-->
-        <div id = "wrap-center" style = "display: inline-block;">
-            <div id = "header"></div>
-                <div id = "header-hamburger"></div>
+        <div id = "wrap-center">
+            <div id = "header">
+                <div id = "header-hamburger">
+                    <div>
+
+                    </div>
+                </div>
+            </div>
             <div id = "search"></div>
             <div id = "nav"></div>
             <div id = "main"></div>
