@@ -599,11 +599,11 @@
                 #main-login > div:last-of-type > a:nth-last-of-type(2)::before, #main-login > div:last-of-type > a:nth-last-of-type(2)::after{
                     content: '';
                     display: inline-block;
-                    width: 1px;
-                    height: 12px;
                     background-color: #d3d5d7;
                     background-color: var(--color_dot_divider);
                     margin: 4px 12px 0;
+                    width: 1px;
+                    height: 12px;
                 }
                 #main-right-ad {
                     height: 240px;
@@ -634,6 +634,37 @@
                     flex: 1;
                     padding: 18px 20px;
                 }
+                #main-newstand-top .dot::before {
+                    content: '';
+                    display: inline-block;
+                    width: 4px;
+                    height: 4px;
+                    background-color: #d3d5d7;
+                    background-color: var(--color_dot_divider);
+                    margin: 9px 7px 0;
+                    border-radius: 50%;
+                    vertical-align: 5px;
+                }
+                #main-newstand-top .slash, #main-newstand-top .dot {
+                    color: rgba(8, 8, 8, .5);
+                    font-weight: 800;
+                }                
+                #main-newstand-top .slash {
+                    position: relative;
+                    padding-left: 26px;
+                }
+                #main-newstand-top .slash::before {
+                    content: '';
+                    display: inline-block;
+                    position: absolute;
+                    top: 4px;
+                    left: 13px;
+                    width: 1px;
+                    height: 15px;
+                    background-color: #d3d5d7;
+                    background-color: var(--color_dot_divider);
+                    transform: skewX(-15deg);
+                }
                 #main-newstand header{
                     font-size: 1.6rem;
                     color: rgba(8,8,8,.5);
@@ -653,6 +684,84 @@
                     padding: 12px 20px;
                     background-color: var(--color_option_bg);
                     border-radius: 4px;
+                    font-size: 1.4rem;
+                    line-height: 26px;
+                }
+                #main-newstand-gray .left {
+                    flex: 1;
+                    display: flex;
+                }
+                #main-newstand-gray .left > a:first-of-type::after {
+                    content:'';
+                    background: url(https://pm.pstatic.net/resources/asset/sp_main.eae24523.png);
+                    background-size: 452px 436px;
+                    background-position: -175px -211px;
+                    background-repeat: no-repeat;
+                    width: 9px;
+                    height: 5px;
+                    display: inline-block;
+                    margin: 10px 0 0 5px;
+                    vertical-align: 3px;
+                }
+                #main-newstand-animation {
+                    padding-left: 25px;
+                    position: relative;
+                }
+                #main-newstand-animation > a:first-of-type{
+                    width: 85.5px;
+                }
+                #main-newstand-animation::before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 7px;
+                    left: 12px;
+                    background-color: #d3d5d7;
+                    background-color: var(--color_dot_divider);
+                    width: 1px;
+                    height: 12px;
+                }
+                #main-newstand-animation a:first-of-type {
+                    vertical-align: 8px;
+                    line-height: 26px;
+                }
+                #main-newstand-animation a:first-of-type::after {
+                    content: '';
+                    display: inline-block;
+                    width: 3;
+                    height: 3;
+                    background-color: #d3d5d7;
+                    background-color: var(--color_dot_divider);
+                    margin: 12px 6px 0 6px;
+                    border-radius: 50%;
+                    vertical-align: 5px;
+                    line-height: 5px;
+                }
+                #main-newstand-animation a:last-of-type {
+                    text-overflow: ellipsis;
+                    width: 400px;
+                    white-space: nowrap;
+                    display: inline-block;
+                    overflow: hidden;
+                }
+                #main-newstand-gray .right {
+                    display: flex;
+                }
+                #main-newstand-gray .bold {
+                    font-weight: bold;
+                    padding-left: 25px;
+                    position: relative;
+                }
+                #main-newstand-gray .bold::before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 7px;
+                    left: 12px;
+                    background-color: #d3d5d7;
+                    background-color: var(--color_dot_divider);
+                    width: 1px;
+                    height: 12px;
                 }
                 #main-newstand a {
                     text-decoration: none;
@@ -664,19 +773,18 @@
                     text-decoration: underline;
                 }
                 #main-newstand-grid {
-                    display: flex;
                     display: grid;
+                    justify-content: center;
+                    align-items: center;
                     height: 224px;
+                    grid-gap: 1px;
+                    background-color: var(--color_boarder_in);
                     grid-template-rows: repeat(4, 1fr);
                     width: 790px;
                     grid-template-columns: repeat(6, 1fr);
                     border: 1px solid var(--color_boarder_in);
                     border-radius: 4px;
                     margin-top: 18px;
-                    grid-gap: 1px;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: var(--color_boarder_in);
                 }
                 #main-newstand-grid > dev {
                     height: 100%;
@@ -698,48 +806,50 @@
                         <div id="main-newstand-top">
                             <header>
                                 <a href="#" class="bold">뉴스스탠드</a>
-                                <a href="#">언론사편집</a>
-                                <a href="#">엔터</a>
-                                <a href="#">스포츠</a>
-                                <a href="#">경제</a>
+                                <a href="#" class="dot">언론사편집</a>
+                                <a href="#" class="slash">엔터</a>
+                                <a href="#" class="slash">스포츠</a>
+                                <a href="#" class="slash">경제</a>
                             </header>
                             <div id="main-newstand-gray">
-                                <div>
+                                <div class="left">
                                     <a href="#">전체언론사</a>
-                                    <a href="#">연합뉴스</a>
-                                    <a href="#">조금씩 배워가는 중 조금씩 배워가는 중 조금씩 배워가는 중 조금씩 배워가는 중 조금씩 배워가는 중 조금씩 배워가는 중</a>
+                                    <div id="main-newstand-animation">
+                                        <a href="#">연합뉴스</a>
+                                        <a href="#">조금씩 배워가는 중 조금씩 배워가는 중 조금씩 배워가는 중 조금씩 배워가는 중 조금씩 배워가는 중 조금씩 배워가는 중</a>
+                                    </div>
                                 </div>
-                                <div>
+                                <div class="right">
                                     <a href="#">뉴스스탠드</a>
-                                    <a href="#">홈</a>
+                                    <a href="#" class="bold">뉴스홈</a>
                                 </div>
                             </div>
-                        </div>
-                        <div id="main-newstand-grid">
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
-                            <div>언론사</div>
+                            <div id="main-newstand-grid">
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                                <div>언론사</div>
+                            </div>
                         </div>
                         <footer>
                             <button><span class="blind">이전</span></button>
