@@ -204,6 +204,10 @@
                     border: 1px solid #03c75a;
                     border-radius: 33px;
                     text-align: left;
+                    font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", helvetica, "Apple SD Gothic Neo", sans-serif;
+                }
+                #search > form:hover {
+                    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 12);
                 }
                 #search > form > input {
                     width: 480px;
@@ -247,10 +251,16 @@
                     background-color: rgba(0, 0, 0, 0);
                     -webkit-box-sizing: border-box;
                     box-sizing: border-box;
-                    font-size: 2rem;
+                    font-size: 1.5rem;
                     line-height: 24px;
                     font-weight: bold;
                     outline: 0;
+                }
+                #search-input::placeholder {
+                    color: white;
+                }
+                #search-input:focus::placeholder {
+                    color: #e4e4e4;
                 }
                 #search-right {
                     display: flex;
@@ -262,7 +272,10 @@
                     background: transparent;
                     border: none;
                     cursor: pointer;
-                    
+
+                }
+                #search-button {
+                    padding: 17px 27px 16px 10px;
                 }
                 #search-keyboard::before {
                     content: "";
@@ -273,6 +286,9 @@
                     background-repeat: no-repeat;
                     width: 24px;
                     height: 14px;
+                }
+                #search-keyboard:hover::before {
+                    filter: brightness(0.7);
                 }
                 #search-recent::before {
                     content: "";
@@ -301,7 +317,7 @@
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"></path></svg>
                     </a>
                     <label for="search-input" class = "blind">검색어 입력</label>
-                    <input id = "search-input" type = "text" placeholder="검색어를 입력하세요.">
+                    <input id = "search-input" type = "text" placeholder="검색어를 입력해 주세요.">
                     <div id = "search-right">
                         <button href="#" id = "search-keyboard">
                             <span class = "blind">입력 도구</span> 
