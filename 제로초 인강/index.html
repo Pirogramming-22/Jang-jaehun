@@ -227,6 +227,7 @@
                     margin-right: 12px;
                 }
                 #search-svg {
+                    position: relative;
                     display: inline-flex;
                     width: 68px;
                     margin-right: 12px;
@@ -234,6 +235,19 @@
                     padding-left: 10px;
                     justify-content: center;
                     align-items: center;
+                }
+                #search-svg::after {
+                    display: none;
+                }
+                #search > form:focus-within #search-svg::after {
+                    display: inline-block;
+                    position: absolute;
+                    content: '';
+                    width: 1px;
+                    height: 20px;
+                    background-color: #e4e4e4;
+                    right: 0;
+                    top: 20px;
                 }
                 #search-svg svg {
                     width: 24px;
