@@ -1,0 +1,224 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#wrap {
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#wrap-top, #wrap-bottom {
+    position: relative;
+    z-index: 0;
+}
+#wrap-top {
+    background-color: #24292e; /* 원하는 상단 배경색 */
+    height: 700px;
+}
+
+#wrap-bottom {
+    background-color: white; /* 원하는 하단 배경색 */
+    height: 300px;
+}
+
+#wrap-center {
+    position: absolute;
+    top: 45%;;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1280px;
+    background-color: transparent;
+    display: inline-block;
+    z-index: 1;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+#header > div {
+    display: flex;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+#header > div > button {
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+#search-input {
+    width: 200px;
+    height: 100%;
+    border-radius: 5px;
+    border: 1px solid #e1e4e8;
+    padding: 0 10px;
+    font-size: 16px;
+    background-color: #d5d6d7;
+}
+#search, #signin, #signup {
+    text-align: right;
+    margin-left: 3px;
+}
+#search {
+    margin-left: 200px;
+}
+#signup {
+    background-color: transparent;
+    border-radius: 5px;
+    border-color: white;
+    border-width: 1px;
+    border: 1px solid #e1e4e8;
+}
+#github-button {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    background-image: url(./githubSymbol.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+#why, #explore, #pricing {
+    position: relative;
+}
+
+#why::after, #explore::after, #pricing::after {
+    content: '^'; /* 아래 화살표 문자 */
+    font-size: 20px; /* 화살표 크기 */
+    position: absolute;
+    right: -5px; /* 버튼 오른쪽에 위치 */
+    top: -50%;
+    color: gray;
+    transform: translateY(-50%);
+    rotate: 180deg; /* 화살표 회전 */
+    cursor: pointer; /* 클릭 가능하게 커서 변경 */
+}
+
+#middle {
+    display: flex;
+    height: 500px;
+    padding: 0 150px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#middle-left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#middle-left-title > p {
+    font-size: 70px;
+    font-weight: 500;
+    color: white;
+    text-align: left;
+    margin: 0;
+}
+
+#middle-left-content > p {
+    font-size: 20px;
+    color: rgb(158, 157, 157);
+    text-align: left;
+    margin: 0;
+}
+#middle-left-content > p > a {
+    color: white;
+}
+
+#middle-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    height: 100%;
+    border-radius: 5px;
+    text-align: left;
+    padding: 0 20px;
+}
+
+#middle-right > div > span {
+    font-size: 15px;
+    color: black;
+}
+#middle-right > div > input {
+    width: 96%;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid #e1e4e8;
+    padding: 0 10px;
+}
+#middle-right > div > p {
+    font-size: 15px;
+    color: gray;
+    margin: 10px 0;
+}
+#username-input, #password-input {
+    background-color: #deedfb;
+}
+
+.title {
+    display: flex;
+    height: 20px;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.middle-right-input {
+    width: 96%;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid #e1e4e8;
+    padding: 0 10px;
+    background-color: #deedfb; /* 모든 .middle-right-input 요소에 적용 */
+    margin-bottom: 15px;
+}
+
+#middle-right-button {
+    width: 100%;
+    height: 65px;
+    background-color: #2ea44f;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 15px;
+    font-weight: 750;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+#space-blank {
+    height: 71.25px;
+}
+
+#footer {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    background-color: transparent;
+    top: -25px;
+    position: relative;
+}
+
+#footer > img {
+    width: 500px;
+    height: auto;
+}

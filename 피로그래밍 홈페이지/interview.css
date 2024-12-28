@@ -1,0 +1,203 @@
+@import "./reset.css";
+
+/* reset.css 파일에서 reset 포함 */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+    box-sizing: border-box;
+}
+
+#main {
+    padding-top: 80px; /* 헤더 높이만큼 여백 추가 */
+    box-sizing: border-box;
+}
+
+#header {
+    position: fixed; /* 고정된 위치 */
+    top: 0;
+    left: 0;
+    width: 100%; /* 화면 너비 채우기 */
+    height: 80px; /* 높이 고정 */
+    background-color: #333; /* 헤더 배경색 */
+    z-index: 10; /* 다른 요소 위에 배치 */
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+#header img {
+    height: 50px;
+    margin-right: auto; /* 로고를 왼쪽 정렬 */
+}
+
+#header ul {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+#header ul li {
+    margin: 0;
+}
+
+#header ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+#header ul li a:hover {
+    color: #0bec12; /* 호버 시 색상 변경 */
+}
+
+#main-second {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    margin-bottom: 16px;
+    color: white;
+    font-size: 1.5rem;
+    padding: 0 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#main-second div {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#main-second a {
+    font-size: 1.2rem;
+    color: white;
+}
+
+#main-second a::after {
+    padding-left: 10px;
+    content: '>';
+    font-size: 1rem; /* 화살표 크기 */
+    color: white;
+    cursor: pointer; /* 클릭 가능하게 커서 변경 */
+}
+
+#main-portfolio {
+    box-sizing: border-box;
+    padding: 0 20px;
+    border-radius: 10px;
+}
+
+#main-portfolio ul {
+    width: 100%;
+    height: 300px;
+    gap: 16px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-portfolio-item {
+    width: 100%;
+    height: 100px;
+    background-color: #555;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.main-portfolio-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-image {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease; /* 이미지 확대 효과 */
+    border-radius: 10px;
+}
+
+.portfolio-image:hover {
+    transform: scale(1.1); /* 호버 시 확대 */
+}
+
+.main-portfolio-item-container h3 {
+    font-size: 1.3rem;
+    margin: 10px 0;
+    color: white;
+}
+
+.main-portfolio-item-container p {
+    font-size: 1rem;
+    color: #ddd;
+    margin-bottom: 10px;
+}
+
+.team-members button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.menu-icon span {
+    width: 20px;
+    height: 2px;
+    background-color: #ccc;
+    transition: width 0.3s ease; /* 너비 변화를 위한 트랜지션 */
+}
+
+/* 호버 시 첫 번째와 세 번째 선의 너비 조정 */
+.main-portfolio-item:hover .menu-icon span:nth-child(1) {
+    width: 10px; /* 왼쪽으로 작아짐 */
+    transition-delay: 0.1s; /* 약간의 딜레이 추가 */
+}
+
+.main-portfolio-item:hover .menu-icon span:nth-child(3) {
+    width: 10px; /* 오른쪽으로 작아짐 */
+    transition-delay: 0.2s; /* 딜레이 추가 */
+    
+}
+
+@media (max-width: 768px) {
+    #main-portfolio ul {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .portfolio-image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .main-portfolio-item-container h3 {
+        font-size: 1rem;
+    }
+
+    .main-portfolio-item-container p {
+        font-size: 0.9rem;
+    }
+}
