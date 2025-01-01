@@ -28,7 +28,7 @@ let strike = 0;
 // TODO 2: 남은 시도 횟수는 9로 설정!!
 attempts.innerHTML = 9;
 let remainingAttepts = 9;
-
+let tryingAttempts = 0;
 // 게임 초기화
 game_setting();
 
@@ -50,9 +50,11 @@ function check_numbers() {
     }
 
     else {
+        if (remainingAttepts > 0){
         compare_number(userInputs);
         append_result(userInputs);
         userinput_clear();
+        }
     }
     return userInputs;
 }
@@ -89,9 +91,6 @@ function compare_number(userInputs) {
 
     console.log(strike);
     console.log(ball);
-
-    // TODO 2: 시도할 때마다 남은 시도 횟수 1씩 감소
-    remainingAttepts--;
     attempts.innerHTML = remainingAttepts;
 
     console.log(attempts);
@@ -106,24 +105,33 @@ function userinput_clear() {
 
     // number1 input으로 focus 이동
     document.getElementById("number1").focus();
+
+    // 새 check-result div 생성 및 추가
+    const nextCheckResult = document.createElement("div");
+    nextCheckResult.classList.add("check-result");
+    document.querySelector(".result-display").appendChild(nextCheckResult);
+
+    // TODO 2: 시도할 때마다 남은 시도 횟수 1씩 감소
+    remainingAttepts--;
+    tryingAttempts++;
+    ball = 0;
+    strike = 0;
 }
 
 // TODO 6: 숫자 3개가 입력되었다면 결과 확인
-    // 2. 생성된 결과에 따라 html 업데이트하기
     // 3. 게임이 끝났는지 체크하고 결과에 따라 이미지를 출력합니다. 게임이 끝나면 **확인하기** 버튼은 비활성화합니다.
     //     - 이미지는 id가 `game-result-img`  img 태그를 사용합니다.
     //     - 승리 시 `success.png` , 패배 시 `fail.png` 를 출력합니다.
 
+// TODO 6-2: 생성된 결과에 따라 html 업데이트하기
 // result에 div 추가
 function append_result(userInputs) {
     let result1 = document.createElement("div");
     result1.classList.add("result", "left");
-    result1.style.width = "40%";
-    result1.style.height = "40px";
     result1.style.backgroundColor = "white"; // 첫 번째 결과 스타일
     result1.style.lineHeight = "40px";
     result1.innerText = userInputs.join(" "); // 입력값 표시
-    checkResult[0].appendChild(result1); // 좌측 추가
+    checkResult[tryingAttempts].appendChild(result1); // 좌측 추가
 
     // ":" 텍스트 추가
     const colonText = document.createElement("div");
@@ -133,23 +141,30 @@ function append_result(userInputs) {
     colonText.style.textAlign = "center";
     colonText.style.lineHeight = "40px";
     colonText.innerText = ":"; // 텍스트 추가
-    checkResult[0].appendChild(colonText); // 가운데 추가
+    checkResult[tryingAttempts].appendChild(colonText); // 가운데 추가
 
     const result2 = document.createElement("div");
     result2.classList.add("result", "right");
-    result2.style.width = "40%";
-    result2.style.height = "40px";
     result2.style.display = "flex";
     result2.style.flexDirection = "row";
     result2.style.justifyContent = "flex-end";
     result2.style.alignItems = "center";
     result2.style.backgroundColor = "aqua"; // 두 번째 결과 스타일
-    checkResult[0].appendChild(result2); // 우측 추가
+    checkResult[tryingAttempts].appendChild(result2); // 우측 추가
 
+    // right와 left 클래스를 동시에 선택
+    const elements = document.querySelectorAll(".right, .left");
+
+    // 속성 변경
+    elements.forEach((element) => {
+        element.style.width = "40%";
+        element.style.height = "40px";
+        element.style.marginTop = 0;
+        element.style.marginBottom = 0;
+    });
     // 우측에 S, B 표시
     // right에 S, B 갯수 표시
     // S와 B가 모두 0이라면 O 출력
-
     if (strike === 0 && ball === 0) {
         const rightContainer = document.getElementsByClassName("right");
 
@@ -157,7 +172,7 @@ function append_result(userInputs) {
         outContainer.classList.add("num-result", "out");
         outContainer.innerText = "O";
         outContainer.style.boxSizing = "border-box";
-        rightContainer[0].appendChild(outContainer);
+        rightContainer[tryingAttempts].appendChild(outContainer);
     }
     // 아니라면 S와 B의 각각의 갯수 출력
     else {
@@ -167,23 +182,23 @@ function append_result(userInputs) {
         const sNumContainer = document.createElement("div");
         sNumContainer.innerText = strike;
         sNumContainer.classList.add("num-result");
-        rightContainer[0].appendChild(sNumContainer);
+        rightContainer[tryingAttempts].appendChild(sNumContainer);
 
         const strikeContainer = document.createElement("div");
         strikeContainer.classList.add("num-result", "strike");
         strikeContainer.innerText = "S";
         strikeContainer.style.boxSizing = "border-box";
-        rightContainer[0].appendChild(strikeContainer);
+        rightContainer[tryingAttempts].appendChild(strikeContainer);
 
         const bNumContainer = document.createElement("div");
         bNumContainer.classList.add("num-result");
         bNumContainer.innerText = ball;
-        rightContainer[0].appendChild(bNumContainer);
+        rightContainer[tryingAttempts].appendChild(bNumContainer);
 
         const ballContainer = document.createElement("div");
         ballContainer.classList.add("num-result", "ball");
         ballContainer.style.boxSizing = "border-box";
         ballContainer.innerText = "B";
-        rightContainer[0].appendChild(ballContainer);
+        rightContainer[tryingAttempts].appendChild(ballContainer);
     }
 }
