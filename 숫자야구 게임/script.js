@@ -79,6 +79,7 @@ function check_numbers() {
         resultImg.src = "fail.png"; // 실패 이미지 출력
         resultImg.alt = "Fail!";
         console.log("check_numbers end: Fail end");
+        document.querySelector(".submit-button").disabled = true;
         return; // 프로그램 종료
     }
 
@@ -90,7 +91,7 @@ function check_numbers() {
         document.activeElement.blur(); // 포커스 해제
         const resultImg = document.getElementById("game-result-img");
         resultImg.src = "success.png"; // success 이미지 출력
-        console.log("check_numbers end: flag === 1");
+        document.querySelector(".submit-button").disabled = true;
         return; // 프로그램 종료
     }
 }
@@ -170,7 +171,6 @@ function userinput_clear() {
 function append_result(userInputs) {
     let result1 = document.createElement("div");
     result1.classList.add("result", "left");
-    result1.style.backgroundColor = "white"; // 첫 번째 결과 스타일
     result1.style.lineHeight = "40px";
     result1.innerText = userInputs.join(" "); // 입력값 표시
     checkResult[tryingAttempts].appendChild(result1); // 좌측 추가
@@ -179,7 +179,6 @@ function append_result(userInputs) {
     const colonText = document.createElement("div");
     colonText.style.width = "30%";
     colonText.style.height = "40px";
-    colonText.style.backgroundColor = "yellow";
     colonText.style.textAlign = "center";
     colonText.style.lineHeight = "40px";
     colonText.innerText = ":"; // 텍스트 추가
@@ -191,7 +190,6 @@ function append_result(userInputs) {
     result2.style.flexDirection = "row";
     result2.style.justifyContent = "flex-end";
     result2.style.alignItems = "center";
-    result2.style.backgroundColor = "aqua"; // 두 번째 결과 스타일
     checkResult[tryingAttempts].appendChild(result2); // 우측 추가
 
     // right와 left 클래스를 동시에 선택
