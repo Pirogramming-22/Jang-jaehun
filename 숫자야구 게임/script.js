@@ -23,11 +23,12 @@ const resultImg = document.getElementById("game-result-img");
 let answer = [];
 let ball = 0;
 let strike = 0;
+let flag = 0;
 
 // 초기 attempts 값으로 9를 지정
 // TODO 2: 남은 시도 횟수는 9로 설정!!
 attempts.innerHTML = 9;
-let remainingAttepts = 9;
+let remainingAttempts = 9;
 let tryingAttempts = 0;
 // 게임 초기화
 game_setting();
@@ -44,19 +45,54 @@ function check_numbers() {
 
     console.log(userInputs);
 
+    // strike, ball 초기화
+    ball = 0;
+    strike = 0;
+
     if (userInputs.includes('')){
         userinput_clear();
-        return
+        console.log("check_numbers end: input is empty");
+        return; // 프로그램 종료
     }
 
-    else {
-        if (remainingAttepts > 0){
-        compare_number(userInputs);
-        append_result(userInputs);
-        userinput_clear();
-        }
+    // strike 및 flag 상태 확인
+    compare_number(userInputs);
+
+    set_flag();
+    
+    append_result(userInputs);
+
+    remainingAttempts--;
+    tryingAttempts++;
+    attempts.innerHTML = remainingAttempts;
+
+    // 실패 조건 및 결과 업데이트
+    if (remainingAttempts > 0) {
+        userinput_clear();        
+    } else {
+        // 실패 처리
+        document.getElementById("number1").value = "";
+        document.getElementById("number2").value = "";
+        document.getElementById("number3").value = "";
+        document.activeElement.blur(); // 포커스 해제
+        const resultImg = document.getElementById("game-result-img");
+        resultImg.src = "fail.png"; // 실패 이미지 출력
+        resultImg.alt = "Fail!";
+        console.log("check_numbers end: Fail end");
+        return; // 프로그램 종료
     }
-    return userInputs;
+
+    if (flag === 1) {
+        // 성공 처리
+        document.getElementById("number1").value = "";
+        document.getElementById("number2").value = "";
+        document.getElementById("number3").value = "";
+        document.activeElement.blur(); // 포커스 해제
+        const resultImg = document.getElementById("game-result-img");
+        resultImg.src = "success.png"; // success 이미지 출력
+        console.log("check_numbers end: flag === 1");
+        return; // 프로그램 종료
+    }
 }
 
 // TODO 3: 중복되지 않는 3개의 0 ~ 9까지의 숫자 랜덤으로 생성
@@ -91,9 +127,21 @@ function compare_number(userInputs) {
 
     console.log(strike);
     console.log(ball);
-    attempts.innerHTML = remainingAttepts;
-
     console.log(attempts);
+}
+
+// TODO 2: 시도할 때마다 남은 시도 횟수 1씩 감소
+function count_attempts() {
+    remainingAttempts--;
+    tryingAttempts++;
+    attempts.innerHTML = remainingAttempts;
+}
+
+// flag를 1로 변경
+function set_flag() {
+    if (strike === 3){
+        flag = 1;
+    }
 }
 
 // TODO 4: html의 input과 결과창의 내용을 비움
@@ -110,12 +158,6 @@ function userinput_clear() {
     const nextCheckResult = document.createElement("div");
     nextCheckResult.classList.add("check-result");
     document.querySelector(".result-display").appendChild(nextCheckResult);
-
-    // TODO 2: 시도할 때마다 남은 시도 횟수 1씩 감소
-    remainingAttepts--;
-    tryingAttempts++;
-    ball = 0;
-    strike = 0;
 }
 
 // TODO 6: 숫자 3개가 입력되었다면 결과 확인
@@ -201,4 +243,6 @@ function append_result(userInputs) {
         ballContainer.innerText = "B";
         rightContainer[tryingAttempts].appendChild(ballContainer);
     }
+    const resultDisplay = document.querySelector(".result-display");
+    resultDisplay.scrollTop = resultDisplay.scrollHeight;
 }
