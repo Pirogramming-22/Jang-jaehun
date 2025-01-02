@@ -31,8 +31,17 @@ TODO 5:
 - 변수 `num`을 이용하여 입력한 수만큼 숫자를 출력하는 코드를 작성하여라.
 """
 
+# TODO 6: 배스킨라빈스31 게임은 참여자가 번갈아가며 숫자를 부른다. 게임이 끝날 때까지 playerA와 playerB에게 번갈아가며 부를 숫자의 개수를 입력받는 코드를 작성하여라.
 def check_num(num, user, player):
-    for i in range(num, num + user): # user가 입력한 수만큼 반봅
+    for i in range(num, num + user): # user가 입력한 수만큼 반복
+        # TODO 6-1: 값에 31이 포함되어있는지 확인(포함되어있다면 해당 플레이어와 num 리턴)
+        if i == 30:
+            ### 디버깅 코드
+            print(f"player{player} : {i + 1}")
+            ### 디버깅 코드
+            print(f"last_player_num = {i + 1}")
+            num += user
+            return num, player
         print(f"player{player} : {i + 1}")
     # user switch
     if (player == "A"):
@@ -41,8 +50,6 @@ def check_num(num, user, player):
         player = "A"
     # num 값 업데이트
     num += user
-    ### 디버깅 코드
-    print(num)
     return num, player
 
 # default user
@@ -53,4 +60,6 @@ while True:
     user = user_input(num)
     num, player = check_num(num, user, player)
     ### 디버깅 코드
-    print(num)
+    print(f"final_num : {num}")
+    if num >= 31:
+        break
