@@ -36,10 +36,11 @@ def check_num(num, user, player):
     for i in range(num, num + user): # user가 입력한 수만큼 반복
         # TODO 6-1: 값에 31이 포함되어있는지 확인(포함되어있다면 해당 플레이어와 num 리턴)
         if i == 30:
-            ### 디버깅 코드
             print(f"player{player} : {i + 1}")
-            ### 디버깅 코드
-            print(f"last_player_num = {i + 1}")
+            # ### 디버깅 코드
+            # print(f"player{player} : {i + 1}")
+            # ### 디버깅 코드
+            # print(f"last_player_num = {i + 1}")
             num += user
             return num, player
         print(f"player{player} : {i + 1}")
@@ -59,7 +60,12 @@ player = "A"
 while True:
     user = user_input(num)
     num, player = check_num(num, user, player)
-    ### 디버깅 코드
-    print(f"final_num : {num}")
+    # ### 디버깅 코드
+    # print(f"final_num : {num}")
     if num >= 31:
+        if (player == "A"):
+            player = "B"
+        else:
+            player = "A"
+        print(f"player{player} win")
         break
