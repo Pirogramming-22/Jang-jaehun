@@ -15,3 +15,6 @@ while True:
             print("1, 2, 3 중 하나를 입력하세요")
         else:
             break
+
+for i in range(1, user + 1):
+    print(f"player : {i}")
