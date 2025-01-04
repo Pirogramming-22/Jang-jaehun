@@ -35,3 +35,7 @@ Temporary Items
 *.icloud
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
+
+# git이 추적하지 않는 파일
+.DS_store
+python_problem/todo.txt

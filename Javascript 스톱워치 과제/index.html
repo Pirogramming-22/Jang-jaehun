@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>피로그래밍 스톱워치</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./reset.css">
+</head>
+<body>
+    <header>
+        <img src="./assets/timer.png" alt="logo">
+        <h2>피로그래밍 스톱워치</h2>
+    </header>
+    <main>
+        <div class="stopwatch">
+            <p class="time">00:00</p>
+            <div class="button_container">
+                <button class="start" onclick="start()">
+                    start
+                </button>
+                <button class="stop" onclick="stop()">
+                    stop
+                </button>
+                <button class="reset" onclick="reset()">
+                    reset
+                </button>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <nav>
+            <button class="check_button_all" onclick="checkAll()"></button>
+            <h3>구간 기록</h3>
+            <button class="delete" onclick="delete_content()">
+                <img src="./assets/delete.png" alt="delete">
+            </button>
+        </nav>
+        <div class="record_container">
+            <div class="record_list">
+            </div>
+        </div>
+    </footer>
+</body>
+    <script src="script.js" defer></script>
+</html>
