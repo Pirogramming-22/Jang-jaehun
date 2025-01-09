@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1>{{ movie.title }}</h1>
+    <img src="{{ movie.image_url }}" class="img-fluid mb-4" alt="{{ movie.title }}">
+    {% csrf_token %}
+    <p><strong>개봉년도:</strong> {{ movie.release_year }}</p>
+    <p><strong>장르:</strong> {{ movie.genre }}</p>
+    <p><strong>별점:</strong> {{ movie.rating }}</p>
+    <p><strong>감독:</strong> {{ movie.director }}</p>
+    <p><strong>주연:</strong> {{ movie.actors }}</p>
+    <p>{{ movie.description }}</p>
+    <a href="{% url 'movie:movie_update' movie.id %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'movie:movie_delete' movie.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}
