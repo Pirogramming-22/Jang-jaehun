@@ -8,8 +8,17 @@ class Movie(models.Model):
     # 개봉년도
     release_year = models.IntegerField()
 
+    # 장르 목록
+    GENRE_CHOICES = [
+        ('Action', 'Action'),
+        ('Comedy', 'Comedy'),
+        ('MeloDrama', 'MeloDrama'),
+        ('SF', 'SF'),
+        ('Horror', 'Horror'),
+    ]
+
     # 장르
-    genre = models.CharField(max_length=100)
+    genre = models.CharField(max_length=50, choices=GENRE_CHOICES)
 
     # 별점
     rating = models.FloatField()
