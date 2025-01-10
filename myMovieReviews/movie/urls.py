@@ -11,11 +11,11 @@ urlpatterns = [
     path('<int:id>', views.movie_detail, name='movie_detail'),
 
     # 영화 생성
-    path('movies/create', views.movie_form, name='movie_create'),
+    path('create', views.movie_form, name='movie_create'),
 
     # 영화 수정
     path('update/<int:id>', views.movie_form, name='movie_update'),
 
     # 영화 삭제
-    path('delete/<int:id>', views.movie_delete, name='movie_delete'),
+    path('delete/<int:id>', views.movie_detail, name='movie_delete'),
 ]

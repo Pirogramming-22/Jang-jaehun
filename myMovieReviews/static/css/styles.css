@@ -57,6 +57,7 @@ footer {
 .btn-primary {
     background-color: #ff4d4d;
     border: none;
+    margin-left: 88%;
 }
 
 .btn-primary:hover {
@@ -96,6 +97,10 @@ form button {
     width: auto;
     padding: 10px 20px;
     font-size: 1rem;
+}
+
+.my-5 > h2 {
+    text-align: center;
 }
 
 /* 영화 상세 페이지 스타일 */
