@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5 movie-detail">
+    <div class="detail-top">
+        <h1>{{ movie.title }}</h1>
+        <div>
+            <a href="{% url 'movie:movie_update' movie.id %}" class="btn btn-warning">수정</a>
+            <form method="POST" action="{% url 'movie:movie_delete' movie.id %}" style="display:inline; padding: 0;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">삭제</button>
+            </form>
+        </div>
+    </div>
+    <div class="detail-center">
+        <img src="{{ movie.image_url }}" class="img-fluid mb-4" alt="{{ movie.title }}">
+        {% csrf_token %}
+        <div class="movie-info">
+            <p><strong>개봉년도</strong> {{ movie.release_year }} 년</p>
+            <p><strong>감독</strong> {{ movie.director }}</p>
+            <p><strong>주연</strong> {{ movie.actors }}</p>
+            <p><strong>장르</strong> {{ movie.genre }}</p>
+            <p><strong>별점</strong> {{ movie.rating }}</p>
+            <p><strong>러닝타임</strong> {{ runtime_hours }} 시간 {{ runtime_minutes }} 분</p>
+        </div>
+    </div>
+    <p>{{ movie.review }}</p>
+</div>
+{% endblock %}

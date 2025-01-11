@@ -1,0 +1,222 @@
+/* 기본적인 설정 */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    /* background-color: #f8f9fa; */
+    background-color: #fff;
+}
+
+/* Navbar 스타일 */
+.navbar {
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar a.nav-link {
+    color: #000;
+    font-weight: 500;
+}
+
+.navbar a.nav-link:hover {
+    color: #ff4d4d;
+}
+
+/* Footer 스타일 */
+footer {
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* Card 스타일 */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    color: var(--bs-card-color);
+    background-color: #f8f9fa;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* 버튼 스타일 */
+.btn-primary {
+    background-color: #ff4d4d;
+    border: none;
+    margin-left: 88%;
+}
+
+.btn-primary:hover {
+    background-color: #ff3333;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* 폼 스타일 */
+form {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+.my-5 > h2 {
+    text-align: center;
+}
+
+/* 영화 상세 페이지 스타일 */
+/* 기본 컨테이너 설정 */
+.movie-detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.detail-top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 제목 스타일 */
+.movie-detail h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+.detail-top .btn-warning {
+    background-color: #fff;
+    color: gray;
+    border: none;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.detail-top .btn-danger {
+    background-color: #fff;
+    color: gray;
+    border: none;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* 영화 정보 스타일 */
+.detail-center {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+
+/* 이미지 스타일 */
+.movie-detail img.img-fluid {
+    width: 20%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.movie-info {
+    width: 80%;
+    padding: 20px;
+    box-sizing: content-box;
+}
+
+.movie-info p:last-child {
+    margin-bottom: 0;
+}
+
+/* 텍스트 스타일 */
+.movie-detail > p {
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+/* 텍스트 강조 스타일 */
+.movie-detail p strong {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #333;
+}
+
+/* 영화 리뷰 텍스트 스타일 */
+.movie-detail > p {
+    font-size: 1.1rem;
+    color: #555;
+    text-align: justify;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .movie-detail {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .movie-detail img {
+        max-width: 100%;
+    }
+}
