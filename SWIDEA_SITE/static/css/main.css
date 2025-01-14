@@ -11,11 +11,14 @@ body {
     font-family: Arial, sans-serif;
     color: #333;
     line-height: 1.6;
+    background-image: url('/static/image/backgroundimg.jpg');
+    background-size: cover; /* 배경 이미지를 화면에 맞게 조정 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    background-attachment: fixed; /* 배경 고정 */
 }
 
 /* 헤더 스타일 */
 .list_header {
-    background-color: #1f1f1f;
     color: #ffffff;
     padding: 1rem 2rem;
     display: flex;

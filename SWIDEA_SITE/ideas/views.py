@@ -40,9 +40,41 @@ def idea_create(request):
     return render(request, 'ideas/idea_create.html', context)
 
 def idea_detail(request, pk):
-    idea = Idea.objects.get(pk=pk)
+    idea = Idea.objects.get(pk = pk) # id가 pk인 레코드를 가져옴
+
     context = {
         'idea': idea
     }
 
     return render(request, 'ideas/idea_detail.html', context)
+
+def idea_delete(request, pk):
+    idea = Idea.objects.get(id = pk) # id가 pk인 레코드를 가져옴
+    idea.delete() # 레코드 삭제
+
+    return redirect('ideas:main')
+
+def idea_update(request, pk):
+    idea = Idea.objects.get(id=pk)  # 특정 아이디어 가져오기
+
+    if request.method == 'POST':
+        form = IdeaForm(request.POST, request.FILES, instance=idea)  # instance=idea 추가
+        if form.is_valid():  # 폼 유효성 검사
+            # 이미지 삭제 체크박스 처리
+            if 'remove_image' in request.POST and request.POST['remove_image'] == 'on':
+                if idea.image:  # 이미지가 존재할 경우
+                    idea.image.delete()  # 기존 이미지 삭제
+                    idea.image = None  # 필드 초기화
+            form.save()  # 수정된 레코드 저장
+        else:
+            print("Form is not valid.")
+            print("Errors:", form.errors)
+        return redirect('ideas:idea_detail', pk=pk)  # 수정 후 상세 페이지로 이동
+    else:
+        form = IdeaForm(instance=idea)  # GET 요청 시 기존 레코드의 값을 폼에 채워서 생성
+
+    context = {
+        'idea': idea,
+        'form': form
+    }
+    return render(request, 'ideas/idea_update.html', context)

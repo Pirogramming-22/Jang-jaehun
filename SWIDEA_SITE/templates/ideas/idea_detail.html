@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}아이디어 관리{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="idea-detail">
+    <div class="idea-detail-header">
+        <h1>Idea Detail</h1>
+        <p>아이디어 세부내용 페이지 입니다. 구현하려 한 아이디어들을 자세히 살펴보세요.</p>
+    </div>
+    <div class="idea-detail-info">
+        <div class="idea-detail-info-left">
+            <img src="
+            {% if idea.image %}
+                {{ idea.image.url }}
+            {% else %}
+                {% static 'image/no_img.png' %}
+            {% endif %}"
+            alt="대체 텍스트" />
+        </div>
+        <div class="idea-detail-info-right">
+            <h1>{{ idea.title }}</h1>
+            <p>1&#41; 아이디어 관심도<br>{{ idea.interest }}</p>
+            <p>2&#41; 예상 개발 툴<br>{{ idea.devtool }}</p>
+            <p>3&#41; 아이디어 설명<br>{{ idea.id }} 번째 아이디어입니다.</p>
+        </div>
+    </div>
+    <div class="idea-detail-bottom">
+        <a href="{% url 'ideas:idea_delete' idea.pk %}" class="btn-delete">삭제</a>
+        <a href="{% url 'ideas:main' %}" class="btn-list">목록</a>
+        <a href="{% url 'ideas:idea_update' idea.pk %}" class="btn-update">수정</a>
+    </div>
+</div>
+{% endblock %}
