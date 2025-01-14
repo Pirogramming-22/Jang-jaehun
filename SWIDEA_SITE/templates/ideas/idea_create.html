@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}아이디어 등록{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    
+    <section class="idea-register-header">
+        <h1>Idea Register</h1>
+        <p>아이디어 등록 페이지입니다. 당신의 아이디어를 잊지 말고 기록하세요!</p>
+    </section>
+
+    <form action="{% url 'ideas:idea_create' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="form_label">
+            <label for="title">아이디어명:</label>
+        </div>
+        {{ form.title }}
+
+        <div class="form_label">
+            <label for="image">이미지:</label>
+        </div>
+        {{ form.image }}
+
+        <div class="form_label">
+            <label for="content">아이디어 설명:</label>
+        </div>
+        {{ form.content }}
+
+        <div class="form_label">
+            <label for="interest">아이디어 관심도:</label>
+        </div>
+        {{ form.interest }}
+
+        <div class="form_label">
+            <label for="dev_tool">예상 개발 툴:</label>
+        </div>
+        {{ form.devtool }}
+        
+        <form action="{% url 'ideas:idea_create' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" class="btn-save">SUBMIT</button>
+    </form>
+</div>
+{% endblock %}

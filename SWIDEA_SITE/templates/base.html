@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My SW Idea Manage{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="list_header">
+        <div class="header_content">
+            <a href="/" class="header_left">
+                <span>My <strong>SW Idea</strong> Manage</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'ideas:idea_create' %}">아이디어 등록</a></li>
+                    <li><a href="">아이디어 관리</a></li>
+                    <li><a href="">개발툴 등록</a></li>
+                    <li><a href="">개발툴 관리</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <hr>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
