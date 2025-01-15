@@ -55,7 +55,7 @@ def idea_delete(request, pk):
     return redirect('ideas:main')
 
 def idea_update(request, pk):
-    idea = Idea.objects.get(id=pk)  # 특정 아이디어 가져오기
+    idea = Idea.objects.get(id = pk)  # 특정 아이디어 가져오기
 
     if request.method == 'POST':
         form = IdeaForm(request.POST, request.FILES, instance=idea)  # instance=idea 추가

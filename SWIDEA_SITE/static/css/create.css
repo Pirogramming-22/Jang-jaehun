@@ -43,14 +43,14 @@ input[type="checkbox"]:checked {
     border-color: #0056b3;
 }
 
-.idea-register-header h1 {
-    font-size: 2.5em;
+.idea-register-header h1, .dev-register-header h1 {
+    font-size: 2rem;
     text-align: center;
     margin-bottom: 10px;
-    color: #f1fa6c;
+    color: #ffff66;
 }
 
-.idea-register-header p {
+.idea-register-header p, .dev-register-header p {
     font-size: 1em;
     text-align: center;
     margin-bottom: 20px;
@@ -58,7 +58,7 @@ input[type="checkbox"]:checked {
 }
 
 .form_label {
-    font-size: 1.1em;
+    font-size: 1rem;
     font-weight: bold;
     color: #fff;
 }
@@ -77,6 +77,10 @@ select {
 input[type="file"] {
     padding: 5px;
     font-size: 1em;
+}
+
+select {
+    width: 20%;
 }
 
 .btn-save {

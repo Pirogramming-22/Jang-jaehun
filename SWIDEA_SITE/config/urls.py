@@ -21,7 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('ideas.urls'))
+    path('', include('ideas.urls')),
+    path('devtool/', include('devtools.urls')),
 ]
 
 if settings.DEBUG:  # 개발 환경에서만 적용(이미지를 불러오기 위함)

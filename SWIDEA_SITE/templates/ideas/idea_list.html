@@ -27,22 +27,26 @@
 <div class="idea-list">
     {% comment %} 아이디어 카드 {% endcomment %}
     {% for idea in ideas %}
-    <div class="idea-card">      
-      {% if idea.image != null and idea.image.url != "" %}
-        <img src="{{ idea.image.url }}" alt="대체 텍스트" />     
-      {% else %}
-        <img src="{% static 'image/no_img.png' %}" alt="대체 텍스트" />     
-      {% endif %}
-      <div class="idea-content">
-        <a class="title" href="{% url 'ideas:idea_detail' idea.pk %}">
-        {% comment %} 타이틀 클릭 시 상세 페이지로 이동 {% endcomment %}
-          {{idea.title}}
-        </a>
-        <hr />
-        <p class="devtool">예상 개발 툴 : {{idea.devtool}}</p>
-        <p class="interest">아이디어 관심도 : {{idea.interest}}</p>
+      {% if idea.pk %}
+      <div class="idea-card">      
+        {% if idea.image != null and idea.image.url != "" %}
+          <img src="{{ idea.image.url }}" alt="대체 텍스트" />     
+        {% else %}
+          <img src="{% static 'image/no_img.png' %}" alt="대체 텍스트" />     
+        {% endif %}
+        <div class="idea-content">
+          <a class="title" href="{% url 'ideas:idea_detail' idea.pk %}">
+          {% comment %} 타이틀 클릭 시 상세 페이지로 이동 {% endcomment %}
+            {{idea.title}}
+          </a>
+          <hr />
+          <p class="devtool">예상 개발 툴 : {{idea.devtool}}</p>
+          <p class="interest">아이디어 관심도 : {{idea.interest}}</p>
+        </div>
       </div>
-    </div>
+      {% else %}
+        <p>데이터가 없습니다.</p>
+      {% endif %}
     {% endfor %}
 </div>
 

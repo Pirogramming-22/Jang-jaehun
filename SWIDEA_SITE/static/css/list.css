@@ -1,24 +1,24 @@
 /* 메인 섹션 스타일 */
 main {
     margin: 3rem 10rem;
-    padding: 1rem 5rem;
+    padding: 1rem 3rem;
     box-sizing: content-box;
     background-color: rgba(150, 150, 150, 0.9);
 }
 
 /* 제목과 설명 */
-.idea-list-header {
+.idea-list-header, .dev-list-header {
     text-align: center;
 }
 
-.idea-list-header h1 {
+.idea-list-header h1, .dev-list-header h1 {
     font-size: 2rem;
     color: #ffff66;
     margin-bottom: 0.5rem;
 }
 
-.idea-list-header p {
-    font-size: 1rem;
+.idea-list-header p, .dev-list-header p {
+    font-size: 0.9rem;
     color: #fff;
 }
 
@@ -78,10 +78,11 @@ main {
 .idea-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 3rem;
+    gap: 1rem;
 }
 
 .idea-card {
+    box-sizing: border-box;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -89,6 +90,7 @@ main {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     max-width: 30rem;
+    height: 30rem;
 }
 
 .idea-card:hover {
@@ -103,7 +105,11 @@ main {
 }
 
 .idea-card img {
+    display: block;
     width: 70%;
+    height: 70%;
+    margin: auto;
+    margin-bottom: 10px;
 }
 
 .idea-content h2 {
@@ -115,6 +121,48 @@ main {
 .idea-content p {
     font-size: 1rem;
     color: #555;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 글자가 너무 길면 ...으로 표시 */
+    white-space: nowrap; /* 아래줄로 내려가는 것을 막기위해 */
+}
+
+/* dev-list*/
+.dev-detail {
+    display: flex;
+    height: 30px;
+    padding: 0 2rem;
+    align-items: center;
+}
+
+.dev-list-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.dev-name {
+    width: 5rem;
+    font-size: 1.2rem;
+    color: #000;
+}
+
+.dev-type {
+    width: 15rem;
+    font-size: 1rem;
+    color: #fff;
+    padding: 0 20px;
+}
+
+.dev-detail > div {
+    display: block;
+}
+
+.dev-desc {
+    width: 700px;
+    font-size: 0.9rem;
+    color: #000;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 글자가 너무 길면 ...으로 표시 */
+    white-space: nowrap; /* 아래줄로 내려가는 것을 막기위해 */
 }
 
 /* 페이지네이션 */

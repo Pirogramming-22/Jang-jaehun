@@ -1,30 +1,30 @@
-.idea-detail {
+.idea-detail, .dev-detail {
     margin: 3rem 10rem;
     padding: 1rem 5rem;
     background-color: rgba(150, 150, 150, 0.9);
 }
 
-.idea-detail p {
+.idea-detail p, .dev-detail p {
     color: #fff;
     margin-bottom: 1rem;
 }
 
-.idea-detail-header {
+.idea-detail-header, .dev-detail-header {
     text-align: center;
     margin-bottom: 2rem;
 }
 
-.idea-detail-header h1 {
+.idea-detail-header h1, .dev-detail-header h1 {
     font-size: 2rem;
     color: #ffff66;
     margin-bottom: 0.5rem;
 }
 
-.idea-detail-header p {
+.idea-detail-header p, .dev-detail-header p {
     font-size: 1rem;
 }
 
-.idea-detail-info {
+.idea-detail-info, .dev-detail-info {
     display: flex;
     border: 1px solid #fff;
     margin: 0 2rem;
@@ -44,14 +44,14 @@
     margin-bottom: 2rem;
 }
 
-.idea-detail-bottom {
+.idea-detail-bottom, .dev-detail-bottom {
     display: flex;
     justify-content: center;
     padding-bottom: 2rem;
     gap: 5rem;
 }
 
-.idea-detail-bottom a {
+.idea-detail-bottom a, .dev-detail-bottom a {
     text-decoration: none;
     color: #fff;
     padding: 0.5rem 1.2rem;
@@ -63,15 +63,36 @@
     background-color: #0056b3;
 }
 
-.idea-detail-bottom .btn-delete {
+.idea-detail-bottom .btn-delete, .dev-detail-bottom .btn-delete {
     background-color: #ea5b42;
 }
 
-.idea-detail-bottom .btn-list {
+.idea-detail-bottom .btn-list , .dev-detail-bottom .btn-list {
     background-color: #fff;
     color: black;
 }
 
-.idea-detail-bottom .btn-update {
+.idea-detail-bottom .btn-update , .dev-detail-bottom .btn-update {
     background-color: #3399ff;
+}
+
+/* dev-detail */
+.dev-detail-info {
+    flex-direction: column;
+    gap: 0;
+}
+
+.dev-detail-info h1, h3 {
+    color: #fff;
+}
+
+.dev-detail-info h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.dev-content {
+    border-left: 2px solid #fff;
+    padding-left: 1rem;
 }

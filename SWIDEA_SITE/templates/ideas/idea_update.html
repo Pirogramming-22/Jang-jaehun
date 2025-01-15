@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}아이디어 등록{% endblock %}
+{% block title %}아이디어 수정{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/create.css' %}">
@@ -49,11 +49,8 @@
             <label for="dev_tool">예상 개발 툴:</label>
         </div>
         {{ form.devtool }}
-        
-        <form action="{% url 'ideas:idea_update' idea.pk %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <button type="submit" class="btn-save">SUBMIT</button>
-        </form>
+
+        <button type="submit" class="btn-save">SUBMIT</button>
     </form>
 </div>
 {% endblock %}
