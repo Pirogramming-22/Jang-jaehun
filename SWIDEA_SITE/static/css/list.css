@@ -104,12 +104,36 @@ main {
     font-weight: bold;
 }
 
-.idea-card img {
-    display: block;
+.idea-image {
     width: 80%;
     height: 50%;
+    position: relative; /* 자식 요소인 star-icon의 기준점 */
+    display: inline-block; /* 이미지와 아이콘을 감싸는 컨테이너 */
+    margin: 0 20px;
+}
+
+.idea-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
     margin: auto;
     margin-bottom: 10px;
+}
+
+/* 별 아이콘 */
+.star-icon {
+    position: absolute; /* 부모 요소를 기준으로 위치 설정 */
+    top: 10px; /* 위쪽 간격 */
+    right: 10px; /* 오른쪽 간격 */
+    font-size: 24px; /* 별 크기 */
+    color: #ccc; /* 노란색 */
+    z-index: 10; /* 이미지 위에 표시되도록 z-index 설정 */
+    cursor: pointer; /* 클릭 가능한 스타일 */
+}
+
+/* 별 클릭 시 색 변경 */
+.star-icon.active {
+    color: gold; /* 찜한 상태 */
 }
 
 .idea-content h2 {
@@ -165,6 +189,25 @@ main {
     white-space: nowrap; /* 아래줄로 내려가는 것을 막기위해 */
 }
 
+.star-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #f0c419; /* 기본 노란색 */
+}
+
+.star-btn .fa-star-o {
+    color: #ccc; /* 테두리만 있는 별 */
+}
+
+.star-btn .fa-star {
+    color: #f0c419; /* 채워진 별 */
+}
+
 /* 페이지네이션 */
 .pagination {
     text-align: center;
@@ -173,11 +216,11 @@ main {
 
 .pagination a {
     text-decoration: none;
-    color: #007bff;
-    padding: 0.5rem 1rem;
-    border: 1px solid #007bff;
+    color: #fff;
+    padding: 1px 5px;
+    border: 1px solid #fff;
     margin: 0 0.3rem;
-    border-radius: 5px;
+    border-radius: 50%;
     transition: background-color 0.3s, color 0.3s;
 }
 

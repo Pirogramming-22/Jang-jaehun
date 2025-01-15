@@ -25,7 +25,10 @@
             alt="대체 텍스트" />
         </div>
         <div class="idea-detail-info-right">
-            <h1>{{ idea.title }}</h1>
+            <h1>
+                {{ idea.title }}
+                <span class="star-icon {% if ideastar %}active{% endif %}" data-url="{% url 'ideas:toggle_star' idea.pk %}">★</span>
+            </h1>
             <p>1&#41; 아이디어 관심도<br>{{ idea.interest }}</p>
             <p>2&#41; 예상 개발 툴<br>{{ idea.devtool }}</p>
             <p>3&#41; 아이디어 설명<br>{{ idea.content }}</p>
@@ -37,4 +40,35 @@
         <a href="{% url 'ideas:idea_update' idea.pk %}" class="btn-update">수정</a>
     </div>
 </div>
+{% endblock %}
+
+{% block ajax_js %}
+<script>
+    const csrfToken = '{{ csrf_token }}'; // CSRF 토큰 가져오기
+
+    // 별 모양 클릭 이벤트 처리
+    document.querySelectorAll('.star-icon').forEach(star => {
+        star.addEventListener('click', function () {
+            const url = this.getAttribute('data-url'); // 별의 URL 가져오기
+
+            // AJAX 요청으로 찜 상태 토글
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken, // CSRF 토큰 추가
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 서버 응답에 따라 상태 토글
+                    this.classList.toggle('active');
+                } else {
+                    console.error('Error toggling star:', data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
 {% endblock %}

@@ -10,6 +10,7 @@ urlpatterns = [
     path('idea-detail/<int:pk>', views.idea_detail, name='idea_detail'),
     path('idea-delete/<int:pk>', views.idea_delete, name='idea_delete'),
     path('idea-update/<int:pk>', views.idea_update, name='idea_update'),
-    path('interest-plus/<int:pk>/', views.interest_plus, name='interest_plus'),
-    path('interest-minus/<int:pk>/', views.interest_minus, name='interest_minus'),
+    path('toggle_star/<int:pk>/', views.toggle_star, name='toggle_star'), # 찜하기 기능
+    path('interest-plus/<int:pk>/', views.interest_plus, name='interest_plus'), # 관심도 증가
+    path('interest-minus/<int:pk>/', views.interest_minus, name='interest_minus'), # 관심도 감소
 ]

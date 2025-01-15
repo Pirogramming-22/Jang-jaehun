@@ -55,6 +55,16 @@
     margin-bottom: 2rem;
 }
 
+.star-icon {
+    font-size: 24px;
+    color: gray; /* 기본 별 색상 */
+    margin-left: 8px;
+}
+
+.star-icon.active {
+    color: gold; /* 찜 된 상태의 별 색상 */
+}
+
 .idea-detail-bottom, .dev-detail-bottom {
     display: flex;
     justify-content: center;
