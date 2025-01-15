@@ -33,9 +33,20 @@
     gap: 3rem;
 }
 
+.idea-detail-info-left {
+    width: 30%;
+    margin: auto;
+}
+
 .idea-detail-info img {
-    max-width: 500px;
-    max-height: 500px;
+    display: block;
+    margin: auto;
+    width: 80%;
+    height: 80%;
+}
+
+.idea-detail-info-right {
+    width: 70%;
 }
 
 .idea-detail-info-right h1 {
@@ -82,7 +93,7 @@
     gap: 0;
 }
 
-.dev-detail-info h1, h3 {
+.dev-detail-info h1, h3, a:visited {
     color: #fff;
 }
 

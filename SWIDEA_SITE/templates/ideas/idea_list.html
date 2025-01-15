@@ -41,7 +41,15 @@
           </a>
           <hr />
           <p class="devtool">예상 개발 툴 : {{idea.devtool}}</p>
-          <p class="interest">아이디어 관심도 : {{idea.interest}}</p>
+          <p class="interest">아이디어 관심도 : 
+            <button class="btn-interest" onclick="location.href='{% url 'ideas:interest_plus' idea.pk %}'">
+                &nbsp;+&nbsp;
+            </button>
+            {{ idea.interest }}
+            <button class="btn-interest" onclick="location.href='{% url 'ideas:interest_minus' idea.pk %}'">
+                &nbsp;-&nbsp;
+            </button>
+          </p>
         </div>
       </div>
       {% else %}
@@ -56,4 +64,37 @@
     <a href="?page=2">2</a>
     <a href="?page=3">3</a>
 </div>
+{% endblock %}
+
+{% block ajax_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const buttons = document.querySelectorAll('.interest-btn');
+
+      buttons.forEach(button => {
+          button.addEventListener('click', function (e) {
+              e.preventDefault();
+              const ideaId = this.getAttribute('data-id');
+
+              fetch(`/ideas/toggle-interest/${ideaId}/`, {
+                  method: 'POST',
+                  headers: {
+                      'X-CSRFToken': '{{ csrf_token }}',
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({})
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      const interestCount = this.querySelector('.interest-count');
+                      interestCount.textContent = data.interest;
+                  } else {
+                      alert('Failed to update interest.');
+                  }
+              });
+          });
+      });
+  });
+</script>
 {% endblock %}

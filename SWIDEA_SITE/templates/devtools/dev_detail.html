@@ -19,8 +19,9 @@
         <p class="dev-content"> {{ devtool.kind }} <br> {{ devtool.content }} </p>
         <hr/>
         <h3>&gt; 만들 수 있는 SW 목록</h3>
-        <p>첫 번째 게시물</p>
-        <p>두 번째 게시물<br></p>
+        {% for idea in ideas %}
+            <a href="{% url 'ideas:idea_detail' idea.pk %}">{{ idea.title }}</a>
+        {% endfor %}
     </div>
     <div class="dev-detail-bottom">
         <a href="{% url 'devtools:devtool_delete' devtool.pk %}" class="btn-delete">삭제</a>

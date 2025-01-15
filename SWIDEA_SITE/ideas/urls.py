@@ -6,8 +6,10 @@ app_name = 'ideas'
 
 urlpatterns = [
     path('', views.main, name='main'),
-    path('idea_create', views.idea_create, name='idea_create'),
-    path('idea_detail/<int:pk>', views.idea_detail, name='idea_detail'),
-    path('idea_delete/<int:pk>', views.idea_delete, name='idea_delete'),
-    path('idea_update/<int:pk>', views.idea_update, name='idea_update'),
+    path('idea-create', views.idea_create, name='idea_create'),
+    path('idea-detail/<int:pk>', views.idea_detail, name='idea_detail'),
+    path('idea-delete/<int:pk>', views.idea_delete, name='idea_delete'),
+    path('idea-update/<int:pk>', views.idea_update, name='idea_update'),
+    path('interest-plus/<int:pk>/', views.interest_plus, name='interest_plus'),
+    path('interest-minus/<int:pk>/', views.interest_minus, name='interest_minus'),
 ]

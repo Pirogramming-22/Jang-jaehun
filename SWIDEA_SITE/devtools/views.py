@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import DevtoolForm
 from .models import Devtool
+from ideas.models import Idea
 
 # Create your views here.
 
@@ -29,9 +30,11 @@ def devtool_create(request):
 
 def devtool_detail(request, pk):
     devtool = Devtool.objects.get(id = pk) # id가 pk인 레코드를 가져옴
+    ideas = Idea.objects.filter(devtool = devtool) # devtool에 해당하는 idea를 가져옴
 
     context = {
-        'devtool': devtool
+        'devtool': devtool,
+        'ideas': ideas,
     }
 
     return render(request, 'devtools/dev_detail.html', context)
