@@ -80,7 +80,7 @@ def idea_update(request, pk):
         'form': form
     }
     return render(request, 'ideas/idea_update.html', context)
-
+'''
 def interest_plus(request, pk):
     idea = get_object_or_404(Idea, pk=pk)
     idea.interest += 1  # 관심도 증가
@@ -93,3 +93,18 @@ def interest_minus(request, pk):
         idea.interest -= 1  # 관심도 감소
         idea.save()
     return redirect('ideas:main')  # 메인 페이지로 리디렉션 또는 적합한 페이지로 이동
+'''
+
+
+def interest_plus(request, pk):
+    idea = get_object_or_404(Idea, pk=pk)
+    idea.interest += 1
+    idea.save()
+    return JsonResponse({'success': True, 'interest': idea.interest})
+
+def interest_minus(request, pk):
+    idea = get_object_or_404(Idea, pk=pk)
+    if idea.interest > 0:
+        idea.interest -= 1
+        idea.save()
+    return JsonResponse({'success': True, 'interest': idea.interest})

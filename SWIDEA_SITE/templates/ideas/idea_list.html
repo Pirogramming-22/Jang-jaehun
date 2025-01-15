@@ -41,14 +41,10 @@
           </a>
           <hr />
           <p class="devtool">예상 개발 툴 : {{idea.devtool}}</p>
-          <p class="interest">아이디어 관심도 : 
-            <button class="btn-interest" onclick="location.href='{% url 'ideas:interest_plus' idea.pk %}'">
-                &nbsp;+&nbsp;
-            </button>
-            {{ idea.interest }}
-            <button class="btn-interest" onclick="location.href='{% url 'ideas:interest_minus' idea.pk %}'">
-                &nbsp;-&nbsp;
-            </button>
+          <p class="interest">아이디어 관심도:
+              <button class="btn-interest" data-url="{% url 'ideas:interest_plus' idea.pk %}">&nbsp;+&nbsp;</button>
+              <span class="interest-value">{{ idea.interest }}</span>
+              <button class="btn-interest" data-url="{% url 'ideas:interest_minus' idea.pk %}">&nbsp;-&nbsp;</button>
           </p>
         </div>
       </div>
@@ -68,32 +64,31 @@
 
 {% block ajax_js %}
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-      const buttons = document.querySelectorAll('.interest-btn');
+  const csrfToken = '{{ csrf_token }}';
+  // 모든 관심도 버튼에 이벤트 리스너 추가
+  document.querySelectorAll('.btn-interest').forEach(button => {
+      button.addEventListener('click', function (e) {
+          e.preventDefault(); // 기본 동작(페이지 이동) 막기
+          const url = this.getAttribute('data-url'); // 버튼의 data-url 속성 값 가져오기
 
-      buttons.forEach(button => {
-          button.addEventListener('click', function (e) {
-              e.preventDefault();
-              const ideaId = this.getAttribute('data-id');
-
-              fetch(`/ideas/toggle-interest/${ideaId}/`, {
-                  method: 'POST',
-                  headers: {
-                      'X-CSRFToken': '{{ csrf_token }}',
-                      'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({})
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.success) {
-                      const interestCount = this.querySelector('.interest-count');
-                      interestCount.textContent = data.interest;
-                  } else {
-                      alert('Failed to update interest.');
-                  }
-              });
-          });
+          fetch(url, {
+              method: 'POST', // POST 요청
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': csrfToken // CSRF 토큰 추가
+              }
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  // 관심도 업데이트
+                  const interestSpan = this.parentElement.querySelector('.interest-value');
+                  interestSpan.innerText = data.interest; // 새로운 관심도 반영
+              } else {
+                  console.error('Error updating interest:', data.error);
+              }
+          })
+          .catch(error => console.error('Error:', error));
       });
   });
 </script>
