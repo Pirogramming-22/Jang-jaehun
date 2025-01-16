@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}개발툴 등록{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/create.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    
+    <section class="dev-register-header">
+        <h1>DevTool Register</h1>
+        <p>개발툴 등록 페이지입니다. 자신이 다룰 수 있는 개발툴을 등록해 보세요.</p>
+    </section>
+
+    <form action="{% url 'devtools:devtool_create' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="form_label">
+            <label for="name">이름:</label>
+        </div>
+        {{ form.name }}
+        
+        <div class="form_label">
+            <label for="kind">종류:</label>
+        </div>
+        {{ form.kind }}
+        <div class="form_label">
+            <label for="content">개발툴 설명:</label>
+        </div>
+        {{ form.content }}
+        
+        <form action="{% url 'devtools:devtool_create' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            <button type="submit" class="btn-save">SUBMIT</button>
+        </form>
+    </form>
+</div>
+{% endblock %}

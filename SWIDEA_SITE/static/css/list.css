@@ -1,0 +1,230 @@
+/* 메인 섹션 스타일 */
+main {
+    margin: 3rem 10rem;
+    padding: 1rem 3rem;
+    box-sizing: content-box;
+    background-color: rgba(150, 150, 150, 0.9);
+}
+
+/* 제목과 설명 */
+.idea-list-header, .dev-list-header {
+    text-align: center;
+}
+
+.idea-list-header h1, .dev-list-header h1 {
+    font-size: 2rem;
+    color: #ffff66;
+    margin-bottom: 0.5rem;
+}
+
+.idea-list-header p, .dev-list-header p {
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+/* 정렬 버튼 */
+.sort-button {
+    text-align: right;
+    margin-bottom: 1.5rem;
+}
+
+.sort-button .dropdown-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.sort-button .dropdown-btn:hover {
+    background-color: #0056b3;
+}
+
+.sort-button .dropdown-menu {
+    list-style: none;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 0.5rem 0;
+    position: absolute;
+    margin-top: 0.5rem;
+    display: none; /* 기본적으로 숨김 */
+}
+
+.sort-button .dropdown-menu li {
+    padding: 0.5rem 1rem;
+}
+
+.sort-button .dropdown-menu li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.sort-button .dropdown-menu li a:hover {
+    background-color: #f4f4f4;
+}
+
+.sort-button select {
+    width: 7rem;
+    height: 2rem;
+    border-radius: 10px;
+    background-color: #eee;
+    font-size: 1rem;
+}
+
+/* 아이디어 카드 */
+.idea-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.idea-card {
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    max-width: 30rem;
+    height: 20rem;
+}
+
+.idea-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.idea-card a {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.idea-image {
+    width: 80%;
+    height: 50%;
+    position: relative; /* 자식 요소인 star-icon의 기준점 */
+    display: inline-block; /* 이미지와 아이콘을 감싸는 컨테이너 */
+    margin: 0 20px;
+}
+
+.idea-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+/* 별 아이콘 */
+.star-icon {
+    position: absolute; /* 부모 요소를 기준으로 위치 설정 */
+    top: 10px; /* 위쪽 간격 */
+    right: 10px; /* 오른쪽 간격 */
+    font-size: 24px; /* 별 크기 */
+    color: #ccc; /* 노란색 */
+    z-index: 10; /* 이미지 위에 표시되도록 z-index 설정 */
+    cursor: pointer; /* 클릭 가능한 스타일 */
+}
+
+/* 별 클릭 시 색 변경 */
+.star-icon.active {
+    color: gold; /* 찜한 상태 */
+}
+
+.idea-content h2 {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: #333;
+}
+
+.idea-content p {
+    font-size: 1rem;
+    color: #555;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 글자가 너무 길면 ...으로 표시 */
+    white-space: nowrap; /* 아래줄로 내려가는 것을 막기위해 */
+}
+
+/* dev-list*/
+.dev-detail {
+    display: flex;
+    height: 30px;
+    padding: 0 2rem;
+    align-items: center;
+}
+
+.dev-list-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.dev-name {
+    width: 5rem;
+    font-size: 1.2rem;
+    color: #000;
+}
+
+.dev-type {
+    width: 15rem;
+    font-size: 1rem;
+    color: #fff;
+    padding: 0 20px;
+}
+
+.dev-detail > div {
+    display: block;
+}
+
+.dev-desc {
+    width: 700px;
+    font-size: 0.9rem;
+    color: #000;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 글자가 너무 길면 ...으로 표시 */
+    white-space: nowrap; /* 아래줄로 내려가는 것을 막기위해 */
+}
+
+.star-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #f0c419; /* 기본 노란색 */
+}
+
+.star-btn .fa-star-o {
+    color: #ccc; /* 테두리만 있는 별 */
+}
+
+.star-btn .fa-star {
+    color: #f0c419; /* 채워진 별 */
+}
+
+/* 페이지네이션 */
+.pagination {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #fff;
+    padding: 1px 5px;
+    border: 1px solid #fff;
+    margin: 0 0.3rem;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: #ffffff;
+}

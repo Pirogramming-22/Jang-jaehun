@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}개발툴 디테일{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dev-detail">
+    <div class="dev-detail-header">
+        <h1>DevTool Detail</h1>
+        <p>개발툴 세부내용 페이지 입니다. 자신이 다룰 수 있는 개발툴에 대한 상세내용을 확인해 보아요.</p>
+    </div>
+    <div class="dev-detail-info">
+        <h1> {{ devtool.name }}</h1>
+        <p class="dev-content"> {{ devtool.kind }} <br> {{ devtool.content }} </p>
+        <hr/>
+        <h3>&gt; 만들 수 있는 SW 목록</h3>
+        {% for idea in ideas %}
+            <a href="{% url 'ideas:idea_detail' idea.pk %}">{{ idea.title }}</a>
+        {% endfor %}
+    </div>
+    <div class="dev-detail-bottom">
+        <a href="{% url 'devtools:devtool_delete' devtool.pk %}" class="btn-delete">삭제</a>
+        <a href="{% url 'devtools:main' %}" class="btn-list">목록</a>
+        <a href="{% url 'devtools:devtool_update' devtool.pk %}" class="btn-update">수정</a>
+    </div>
+</div>
+{% endblock %}

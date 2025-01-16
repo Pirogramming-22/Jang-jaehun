@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}아이디어 관리{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="idea-list-header">
+    <h1>Idea List</h1>
+    <p>다양한 아이디어를 한 눈에 관리하고 기록하세요!</p>
+</section>
+
+<div class="sort-button">
+    <select onchange="location.href=this.value">
+        <option value="" {% if sort == None or sort == '' %}selected{% endif %}>--정렬기준--</option>
+        <option value="?sort=popularity" {% if sort == 'popularity' %}selected{% endif %}>찜하기순</option>
+        <option value="?sort=oldest" {% if sort == 'oldest' %}selected{% endif %}>등록순</option>
+        <option value="?sort=name" {% if sort == 'name' %}selected{% endif %}>이름순</option>
+        <option value="?sort=newest" {% if sort == 'newest' %}selected{% endif %}>최신순</option>
+    </select>
+</div>
+
+<div class="idea-list">
+    {% comment %} 아이디어 카드 {% endcomment %}
+    {% for idea in ideas %}
+      {% if idea.pk %}
+      <div class="idea-card">      
+        <div class="idea-image">
+          {% if idea.image != null and idea.image.url != "" %}
+            <img src="{{ idea.image.url }}" alt="{{ idea.title }}" />
+            <button class="star-icon {% if idea.id in starred_ideas %}active{% endif %}" data-url="{% url 'ideas:toggle_star' idea.pk %}">★</button>
+          {% else %}
+            <img src="{% static 'image/no_img.png' %}" alt="대체 텍스트" />
+          {% endif %}
+        </div>
+        <div class="idea-content">
+          <a class="title" href="{% url 'ideas:idea_detail' idea.pk %}">
+          {% comment %} 타이틀 클릭 시 상세 페이지로 이동 {% endcomment %}
+            {{idea.title}}
+          </a>
+          <hr />
+          <p class="devtool">예상 개발 툴 : {{idea.devtool}}</p>
+          <p class="interest">아이디어 관심도:
+              <button class="btn-interest" data-url="{% url 'ideas:interest_plus' idea.pk %}">&nbsp;+&nbsp;</button>
+              <span class="interest-value">{{ idea.interest }}</span>
+              <button class="btn-interest" data-url="{% url 'ideas:interest_minus' idea.pk %}">&nbsp;-&nbsp;</button>
+          </p>
+        </div>
+      </div>
+      {% else %}
+        <p>데이터가 없습니다.</p>
+      {% endif %}
+    {% endfor %}
+</div>
+
+<!-- 페이지네이션 -->
+<div class="pagination">
+    <a href="?page=1">1</a>
+    <a href="?page=2">2</a>
+    <a href="?page=3">3</a>
+</div>
+{% endblock %}
+
+{% block ajax_js %}
+<script>
+  const csrfToken = '{{ csrf_token }}'; // CSRF 토큰 가져오기
+
+  // 별 모양 클릭 시 AJAX 요청
+  document.querySelectorAll('.star-icon').forEach(star => {
+    star.addEventListener('click', function () {
+        const url = this.getAttribute('data-url'); // 버튼의 data-url 속성 값 가져오기
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken, // CSRF 토큰 추가
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                this.classList.toggle('active'); // 활성화 상태 토글
+            } else {
+                console.error('Error toggling star:', data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  });
+
+  // 관심도 버튼 클릭 시 AJAX 요청
+  document.querySelectorAll('.btn-interest').forEach(button => {
+      button.addEventListener('click', function (e) {
+          e.preventDefault(); // 기본 동작(페이지 이동) 막기
+          const url = this.getAttribute('data-url'); // 버튼의 data-url 속성 값 가져오기
+
+          fetch(url, {
+              method: 'POST', // POST 요청
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': csrfToken // CSRF 토큰 추가
+              }
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  // 관심도 업데이트
+                  const interestSpan = this.parentElement.querySelector('.interest-value');
+                  interestSpan.innerText = data.interest; // 새로운 관심도 반영
+              } else {
+                  console.error('Error updating interest:', data.error);
+              }
+          })
+          .catch(error => console.error('Error:', error));
+      });
+  });
+</script>
+{% endblock %}
