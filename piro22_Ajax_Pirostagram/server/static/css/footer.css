@@ -1,0 +1,15 @@
+footer {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.navBar {
+    color: white;
+    padding: var(--padding);
+    font-weight: bold;
+    opacity: 0.5; /* 투명도 */
+}
+
+.navBar--selected {
+    opacity: 1;
+}

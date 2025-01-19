@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="{%static 'css/post.css'%}">
+    <title>Pirostagram</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <button class="header__goBackButton">
+          <img src="{%static 'icons/goBack.svg'%}" alt="뒤로 가기 버튼" />
+        </button>
+        <div class="header__username">Pirogramming</div>
+        <div class="header__rightButtons">
+          <button class="header__alarmButton">
+            <img src="{%static 'icons/alarm.svg'%}" alt="알림 열기 버튼" />
+          </button>
+          <button class="header__moreButton">
+            <img src="{%static 'icons/more.svg'%}" alt="더보기 열기 버튼" />
+          </button>
+        </div>
+      </header>
+      <main>
+        {% for post in posts %}
+          <div class="post-container post-id-{{ post.id }}">
+            <div class="post-header">
+                <div class="post-header-left">
+                    <div class="profile__image">
+                        <img src="{% static 'images/profilePicture.png' %}" alt="유저 이미지" >
+                    </div>
+                    <p class="user-id">Pirogrammer</p>
+                </div>
+              <div class="more">
+                <img src="{% static 'icons/more.svg' %}" alt="더보기 버튼" />
+              </div>
+            </div>
+            <div class="post-img">
+              <img src="{% static 'images/pirogramming.jpeg' %}" alt="" class="post-photo">
+            </div>
+            <div class="post-btn">
+              <div class="btn-3">
+                <button class="like" data-id="{{ post.id }}" data-liked="{{ post.like }}" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" class="heart-icon">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+                <button class="comment-btn">
+                    <img src="{% static 'icons/comment.png' %}" alt="댓글 버튼" />
+                </button>
+                <button class="send">
+                    <img src="{% static 'icons/send.png' %}" alt="공유 버튼" />
+                </button>
+              </div>
+              <button class="save">
+                <img src="{% static 'icons/bookmark.png' %}" alt="저장 버튼" />
+              </button>
+            </div>
+            <div class="post-content">
+              {% if post.like <= 1 %}
+                <p>Pirogramming 님이 좋아합니다.</p>
+              {% else %}
+                <p>Pirogramming 님외 여러 명이 좋아합니다.</p>
+              {% endif %}
+              <p>Pirogrammer {{ post.title }}</p>
+              <a href="#">댓글 모두 보기</a>
+              <p class ="content-date">{{ post.created_at|date:"Y년 m월 d일" }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </main>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const csrfToken = "{{ csrf_token }}";
+
+    document.querySelectorAll('.like').forEach(likeBtn => {
+        likeBtn.addEventListener('click', async () => {
+            const postId = likeBtn.closest('.post-container').classList[1].split('-')[2]; // ID 추출
+            const isLiked = likeBtn.dataset.liked === 'true'; // 버튼 상태 가져오기
+            const type = isLiked ? 'unlike' : 'like';
+
+            try {
+                const data = await onClickLike(postId, type);
+                likeBtn.dataset.liked = data.liked; // 상태 업데이트
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+
+    const likeHandleResponse = (id, liked, likes) => {
+        const heartIcon = document.querySelector(`.post-id-${id} .heart-icon`);
+
+        // 하트 색상 업데이트
+        if (liked) {
+            heartIcon.style.fill = 'red';
+            heartIcon.style.stroke = 'red';
+        } else {
+            heartIcon.style.fill = 'none';
+            heartIcon.style.stroke = 'white';
+        }
+
+        console.log(`Post ID ${id}: ${liked ? 'Liked' : 'Unliked'}, Total Likes: ${likes}`);
+    };
+
+    const onClickLike = async (id, type) => {
+        const url = "like_ajax/";
+        const response = await axios.post(
+            url,
+            { id, type },
+            { headers: { "X-CSRFToken": csrfToken, "X-Requested-With": "XMLHttpRequest" } }
+        );
+        const { data } = response;
+
+        if (data) {
+            likeHandleResponse(data.id, data.liked, data.likes);
+            return data;
+        } else {
+            console.error('No data received in response.');
+        }
+    };
+    </script>
+</html>
