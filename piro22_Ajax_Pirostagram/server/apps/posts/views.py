@@ -9,6 +9,9 @@ def post_list(request):
 
     posts = Post.objects.all()
 
+    for post in posts:
+        post.is_liked = post.likes > 0  # likes가 0보다 크면 liked 상태
+
     context = {
         'posts': posts
     }
@@ -17,20 +20,17 @@ def post_list(request):
 
 @csrf_exempt # CSRF 토큰 검사를 하지 않음
 def like_ajax(request):
-    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':  # AJAX 요청 확인
-        print("Request received")
-        data = json.loads(request.body)  # JSON 데이터를 파싱
+    if request.method == 'POST':
+        data = json.loads(request.body)
         post_id = data.get("id")
-        like_type = data.get("type")
-
-        if not post_id or not like_type:
-            return JsonResponse({"error": "Invalid data"}, status=400)
-
         post = Post.objects.get(id=post_id)
-        if like_type == "like":
-            post.likes += 1
-        elif like_type == "unlike":
-            post.likes -= 1
 
+        # likes 값 토글 (0 -> 1, 1 -> 0)
+        post.likes = 1 if post.likes == 0 else 0
         post.save()
-        return JsonResponse({"id": post.id, "likes": post.likes, "liked": like_type == "like"})
+
+        return JsonResponse({
+            "id": post.id,
+            "likes": post.likes,
+            "liked": post.likes == 1
+        })

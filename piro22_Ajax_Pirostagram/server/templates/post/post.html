@@ -42,8 +42,11 @@
             </div>
             <div class="post-btn">
               <div class="btn-3">
-                <button class="like" data-id="{{ post.id }}" data-liked="{{ post.like }}" >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" class="heart-icon">
+                <button class="like" data-id="{{ post.id }}" data-liked="{{ post.likes }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" 
+                        class="heart-icon" 
+                        style="fill: {% if post.likes == 1 %}red{% else %}none{% endif %};
+                               stroke: {% if post.likes == 1 %}red{% else %}white{% endif %};">
                         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                     </svg>
                 </button>
@@ -59,7 +62,7 @@
               </button>
             </div>
             <div class="post-content">
-              {% if post.like <= 1 %}
+              {% if post.likes <= 1 %}
                 <p>Pirogramming 님이 좋아합니다.</p>
               {% else %}
                 <p>Pirogramming 님외 여러 명이 좋아합니다.</p>
@@ -76,52 +79,36 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     const csrfToken = "{{ csrf_token }}";
-
     document.querySelectorAll('.like').forEach(likeBtn => {
         likeBtn.addEventListener('click', async () => {
-            const postId = likeBtn.closest('.post-container').classList[1].split('-')[2]; // ID 추출
-            const isLiked = likeBtn.dataset.liked === 'true'; // 버튼 상태 가져오기
-            const type = isLiked ? 'unlike' : 'like';
-
+            const postId = likeBtn.dataset.id;
+            const isLiked = likeBtn.dataset.liked === '1'; // 현재 상태 확인
+    
             try {
-                const data = await onClickLike(postId, type);
-                likeBtn.dataset.liked = data.liked; // 상태 업데이트
+                const response = await axios.post('/posts/like_ajax/', { id: postId }, {
+                    headers: {
+                        "X-CSRFToken": csrfToken, // CSRF 토큰 추가
+                        "X-Requested-With": "XMLHttpRequest" // AJAX 요청임을 명시
+                    }
+                });
+                const data = response.data;
+    
+                // 하트 색상 업데이트
+                const heartIcon = likeBtn.querySelector('.heart-icon');
+                if (data.liked) {
+                    heartIcon.style.fill = 'red';
+                    heartIcon.style.stroke = 'red';
+                } else {
+                    heartIcon.style.fill = 'none';
+                    heartIcon.style.stroke = 'white';
+                }
+    
+                // 데이터 속성 업데이트
+                likeBtn.dataset.liked = data.liked ? '1' : '0';
             } catch (error) {
                 console.error('Error:', error);
             }
         });
     });
-
-    const likeHandleResponse = (id, liked, likes) => {
-        const heartIcon = document.querySelector(`.post-id-${id} .heart-icon`);
-
-        // 하트 색상 업데이트
-        if (liked) {
-            heartIcon.style.fill = 'red';
-            heartIcon.style.stroke = 'red';
-        } else {
-            heartIcon.style.fill = 'none';
-            heartIcon.style.stroke = 'white';
-        }
-
-        console.log(`Post ID ${id}: ${liked ? 'Liked' : 'Unliked'}, Total Likes: ${likes}`);
-    };
-
-    const onClickLike = async (id, type) => {
-        const url = "like_ajax/";
-        const response = await axios.post(
-            url,
-            { id, type },
-            { headers: { "X-CSRFToken": csrfToken, "X-Requested-With": "XMLHttpRequest" } }
-        );
-        const { data } = response;
-
-        if (data) {
-            likeHandleResponse(data.id, data.liked, data.likes);
-            return data;
-        } else {
-            console.error('No data received in response.');
-        }
-    };
     </script>
 </html>
