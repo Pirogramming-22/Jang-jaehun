@@ -50,7 +50,7 @@
                         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                     </svg>
                 </button>
-                <button class="comment-btn">
+                <button class="comment-btn" data-id="{{ post.id }}">
                     <img src="{% static 'icons/comment.png' %}" alt="댓글 버튼" />
                 </button>
                 <button class="send">
@@ -62,14 +62,27 @@
               </button>
             </div>
             <div class="post-content">
-              {% if post.likes <= 1 %}
+              {% if post.likes == 1 %}
                 <p>Pirogramming 님이 좋아합니다.</p>
               {% else %}
-                <p>Pirogramming 님외 여러 명이 좋아합니다.</p>
+                <p></p>
               {% endif %}
               <p>Pirogrammer {{ post.title }}</p>
               <a href="#">댓글 모두 보기</a>
               <p class ="content-date">{{ post.created_at|date:"Y년 m월 d일" }}</p>
+            </div>
+            
+            <!-- 댓글 창 컨테이너 -->
+            <div class="comments-container" id="comments-{{ post.id }}" style="display: none;">
+                <div class="comments-list">
+                <!-- 댓글이 동적으로 추가될 부분 -->
+                </div>
+                <div class="add-comment">
+                <input type="text" id="comment-input-{{ post.id }}" placeholder="댓글을 입력하세요" />
+                <button class="add-comment-btn" data-id="{{ post.id }}">
+                    <img src="{% static 'icons/send.png' %}" alt="댓글 전송 버튼" />
+                </button>
+                </div>
             </div>
           </div>
         {% endfor %}
@@ -107,6 +120,86 @@
                 likeBtn.dataset.liked = data.liked ? '1' : '0';
             } catch (error) {
                 console.error('Error:', error);
+            }
+        });
+    });
+
+    {% comment %} 댓글 버튼 클릭 시 댓글 데이터를 가져와서 댓글 창에 표시 {% endcomment %}
+    document.querySelectorAll('.comment-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const postId = button.dataset.id;
+            const commentsContainer = document.getElementById(`comments-${postId}`);
+            const commentsList = commentsContainer.querySelector('.comments-list');
+    
+            // 댓글 창이 열려 있으면 닫기
+            if (commentsContainer.style.display === 'block') {
+                commentsContainer.style.display = 'none';
+                return;
+            }
+    
+            try {
+                // 댓글 가져오기 요청
+                const response = await axios.get(`/posts/${postId}/comments/`);
+                const comments = response.data;
+    
+                // 댓글 데이터가 비어 있을 경우 처리
+                if (comments.length === 0) {
+                    commentsList.innerHTML = `
+                        <div class="no-comments">
+                            <p>댓글이 없습니다. 첫 댓글을 작성해보세요!</p>
+                        </div>
+                    `;
+                } else {
+                    // 댓글 데이터 렌더링
+                    commentsList.innerHTML = comments.map(comment => `
+                        <div class="comment">
+                            <p><strong>${comment.user}</strong>: ${comment.text}</p>
+                            <p class="comment-date">${comment.created_at}</p>
+                        </div>
+                    `).join('');
+                }
+    
+                commentsContainer.style.display = 'block'; // 댓글 창 표시
+            } catch (error) {
+                console.error('Error loading comments:', error);
+            }
+        });
+    });
+
+    // 댓글 추가 로직
+    document.querySelectorAll('.add-comment-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const postId = button.dataset.id;
+            const inputField = document.getElementById(`comment-input-${postId}`);
+            const commentsList = document.getElementById(`comments-${postId}`).querySelector('.comments-list');
+            const text = inputField.value.trim();
+
+            if (!text) {
+                alert('댓글을 입력하세요!');
+                return;
+            }
+
+            try {
+                // 댓글 추가 요청
+                const response = await axios.post(`/posts/${postId}/comments/`, { text });
+                const comment = response.data;
+
+                if (!comment || !comment.text) {
+                    throw new Error("댓글 데이터를 가져오지 못했습니다.");
+                }
+
+                // 댓글 추가
+                const newCommentHTML = `
+                    <div class="comment">
+                        <p><strong>${comment.user}</strong>: ${comment.text}</p>
+                        <p class="comment-date">${comment.created_at}</p>
+                    </div>
+                `;
+                commentsList.innerHTML += newCommentHTML; // 새 댓글 추가
+                inputField.value = ''; // 입력창 초기화
+            } catch (error) {
+                console.error('Error adding comment:', error);
+                alert("댓글 추가 중 오류가 발생했습니다. 다시 시도해주세요.");
             }
         });
     });

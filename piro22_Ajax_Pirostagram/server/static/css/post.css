@@ -99,7 +99,67 @@
   margin-left: 10px;
 }
 
+.comment{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.comment-left img {
+  width: 36px;
+  height: 36px;
+}
+
+
 .post-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.comments-container {
+  background: rgba(150, 150, 150, 0.5);
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-comment {
+  display: flex;
+  margin-top: 10px;
+}
+
+.add-comment input {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.add-comment button {
+  position: relative;
+  width: 25.625px;
+  height: 25.625px;
+  padding: 5px 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-comment button:hover {
+  background: #37b5f9;
+}
+
+.add-comment img {
+  position: relative;
+  right: 10px;
+  bottom: 3px;
   width: 24px;
   height: 24px;
 }

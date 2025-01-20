@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post
+from .models import Post, Comment
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
@@ -34,3 +34,46 @@ def like_ajax(request):
             "likes": post.likes,
             "liked": post.likes == 1
         })
+
+@csrf_exempt
+def post_comments(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+
+        if request.method == 'GET':
+            # 댓글 조회
+            comments = post.comments.all()
+            if not comments.exists():
+                return JsonResponse([], safe=False)  # 빈 배열 반환
+
+            comments_data = [
+                {
+                    'user': comment.user,
+                    'text': comment.text,
+                    'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M')
+                }
+                for comment in comments
+            ]
+            return JsonResponse(comments_data, safe=False)
+
+        elif request.method == 'POST':
+            # 댓글 추가
+            data = json.loads(request.body)
+            text = data.get('text')
+
+            if not text:
+                return JsonResponse({'error': '댓글 내용이 없습니다.'}, status=400)
+
+            comment = Comment.objects.create(post=post, user='익명 사용자', text=text)  # 사용자 처리 예시
+            return JsonResponse({
+                'user': comment.user,
+                'text': comment.text,
+                'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M')
+            })
+
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+    except Post.DoesNotExist:
+        return JsonResponse({'error': 'Post not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
