@@ -49,7 +49,7 @@ def post_comments(request, post_id):
             comments_data = [
                 {   
                     'id': comment.id,
-                    'user': comment.user.username,  # 현재 로그인된 사용자
+                    'user': comment.user,
                     'text': comment.text,
                     'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M')
                 }
@@ -60,16 +60,16 @@ def post_comments(request, post_id):
         elif request.method == 'POST':
             # 댓글 추가
             data = json.loads(request.body)
-            user = request.user  # 현재 로그인된 사용자
+            user_name = data.get('user')
             text = data.get('text')
 
             if not text:
                 return JsonResponse({'error': '댓글 내용이 없습니다.'}, status=400)
 
-            comment = Comment.objects.create(post=post, user=user, text=text)  # 사용자 처리 예시
+            comment = Comment.objects.create(post=post, user=user_name, text=text)  # 사용자 처리 예시
             return JsonResponse({
                 'id': comment.id,
-                "user": comment.user.username,
+                'user': comment.user,
                 'text': comment.text,
                 'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M')
             })

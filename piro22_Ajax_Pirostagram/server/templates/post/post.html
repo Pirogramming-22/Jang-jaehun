@@ -188,6 +188,7 @@
             const inputField = document.getElementById(`comment-input-${postId}`);
             const commentsList = document.getElementById(`comments-${postId}`).querySelector('.comments-list');
             const text = inputField.value.trim();
+            const userName = "Pirogramming"; // 고정된 사용자 이름
 
             if (!text) {
                 alert('댓글을 입력하세요!');
@@ -196,7 +197,10 @@
 
             try {
                 // 댓글 추가 요청
-                const response = await axios.post(`/posts/${postId}/comments/`, { text });
+                const response = await axios.post(`/posts/${postId}/comments/`, {
+                    text,
+                    user: userName,
+                });
                 const comment = response.data;
 
                 if (!comment || !comment.text) {
