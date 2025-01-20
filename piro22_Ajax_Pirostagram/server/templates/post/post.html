@@ -11,7 +11,9 @@
     <div class="container">
       <header class="header">
         <button class="header__goBackButton">
-          <img src="{%static 'icons/goBack.svg'%}" alt="뒤로 가기 버튼" />
+            <a href="{% url 'main:main' %}">
+              <img src="{%static 'icons/goBack.svg'%}" alt="뒤로 가기 버튼" />
+            </a>
         </button>
         <div class="header__username">Pirogramming</div>
         <div class="header__rightButtons">
@@ -131,35 +133,48 @@
             const commentsContainer = document.getElementById(`comments-${postId}`);
             const commentsList = commentsContainer.querySelector('.comments-list');
     
-            // 댓글 창이 열려 있으면 닫기
             if (commentsContainer.style.display === 'block') {
                 commentsContainer.style.display = 'none';
                 return;
             }
     
             try {
-                // 댓글 가져오기 요청
                 const response = await axios.get(`/posts/${postId}/comments/`);
                 const comments = response.data;
     
-                // 댓글 데이터가 비어 있을 경우 처리
-                if (comments.length === 0) {
-                    commentsList.innerHTML = `
-                        <div class="no-comments">
-                            <p>댓글이 없습니다. 첫 댓글을 작성해보세요!</p>
-                        </div>
-                    `;
-                } else {
-                    // 댓글 데이터 렌더링
-                    commentsList.innerHTML = comments.map(comment => `
-                        <div class="comment">
-                            <p><strong>${comment.user}</strong>: ${comment.text}</p>
-                            <p class="comment-date">${comment.created_at}</p>
-                        </div>
-                    `).join('');
-                }
+                commentsList.innerHTML = comments.map(comment => `
+                    <div class="comment" id="comment-${comment.id}">
+                        <p><strong>${comment.user}</strong>: ${comment.text}</p>
+                        <button class="delete-comment-btn" data-comment-id="${comment.id}" data-post-id="${postId}">
+                            <img src="{% static 'icons/trash.png' %}" class="delete-comment-btn" data-comment-id="${comment.id}" data-post-id="${postId}" alt="삭제 버튼" />
+                        </button>
+                    </div>
+                `).join('');
     
-                commentsContainer.style.display = 'block'; // 댓글 창 표시
+                commentsContainer.style.display = 'block';
+    
+                // 이벤트 위임 방식으로 삭제 처리
+                commentsList.addEventListener('click', async (event) => {
+                    if (event.target.classList.contains('delete-comment-btn')) {
+                        const deleteBtn = event.target;
+                        const commentId = deleteBtn.dataset.commentId;
+                        const postId = deleteBtn.dataset.postId;
+    
+                        if (!commentId || !postId) {
+                            console.error("댓글 ID 또는 게시물 ID가 없습니다.");
+                            return;
+                        }
+    
+                        try {
+                            await axios.delete(`/posts/${postId}/comments/${commentId}/`, {
+                                headers: { "X-CSRFToken": csrfToken },
+                            });
+                            deleteBtn.closest('.comment').remove(); // 댓글 삭제
+                        } catch (error) {
+                            console.error('Error deleting comment:', error);
+                        }
+                    }
+                });
             } catch (error) {
                 console.error('Error loading comments:', error);
             }
@@ -192,7 +207,9 @@
                 const newCommentHTML = `
                     <div class="comment">
                         <p><strong>${comment.user}</strong>: ${comment.text}</p>
-                        <p class="comment-date">${comment.created_at}</p>
+                        <button class="delete-comment-btn" data-comment-id="${comment.id}" data-post-id="${postId}">
+                            <img src="{% static 'icons/trash.png' %}" class="delete-comment-btn" data-comment-id="${comment.id}" data-post-id="${postId}" alt="삭제 버튼" />
+                        </button>
                     </div>
                 `;
                 commentsList.innerHTML += newCommentHTML; // 새 댓글 추가

@@ -47,8 +47,9 @@ def post_comments(request, post_id):
                 return JsonResponse([], safe=False)  # 빈 배열 반환
 
             comments_data = [
-                {
-                    'user': comment.user,
+                {   
+                    'id': comment.id,
+                    'user': comment.user.username,  # 현재 로그인된 사용자
                     'text': comment.text,
                     'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M')
                 }
@@ -59,14 +60,16 @@ def post_comments(request, post_id):
         elif request.method == 'POST':
             # 댓글 추가
             data = json.loads(request.body)
+            user = request.user  # 현재 로그인된 사용자
             text = data.get('text')
 
             if not text:
                 return JsonResponse({'error': '댓글 내용이 없습니다.'}, status=400)
 
-            comment = Comment.objects.create(post=post, user='익명 사용자', text=text)  # 사용자 처리 예시
+            comment = Comment.objects.create(post=post, user=user, text=text)  # 사용자 처리 예시
             return JsonResponse({
-                'user': comment.user,
+                'id': comment.id,
+                "user": comment.user.username,
                 'text': comment.text,
                 'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M')
             })
@@ -77,3 +80,20 @@ def post_comments(request, post_id):
         return JsonResponse({'error': 'Post not found'}, status=404)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+def delete_comment(request, post_id, comment_id):
+    if request.method == 'DELETE':
+        try:
+            post = Post.objects.get(id=post_id)
+            comment = Comment.objects.get(id=comment_id, post=post)
+            comment.delete()
+            return JsonResponse({'message': 'Comment deleted successfully.'}, status=200)
+        except Post.DoesNotExist:
+            return JsonResponse({'error': 'Post not found.'}, status=404)
+        except Comment.DoesNotExist:
+            return JsonResponse({'error': 'Comment not found.'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method.'}, status=405)

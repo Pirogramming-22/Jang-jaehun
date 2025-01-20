@@ -4,12 +4,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
+  padding: 16px 20px;
 }
 
 .header__rightButtons {
   display: flex;
-  gap: 10px;
+  gap: 16px;
 }
 
 .header__username {
@@ -124,6 +124,15 @@
   margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.comment > p {
+  font-size: 12px;
+}
+
+.delete-comment-btn > img {
+  width: 24px;
+  height: 24px;
 }
 
 .add-comment {
