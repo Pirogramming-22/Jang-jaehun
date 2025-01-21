@@ -1,0 +1,39 @@
+{% extends "post.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="comment-container">
+    <div class="comment">
+        <div class="comment-left">
+            <img src="{% static 'images/profilePicture.png' %}" alt="유저 이미지" >
+            <div class="comment-content">
+                <p class="comment-id">Pirogrammer</p>
+                <p class="comment-content">피로그래밍 짱이야!</p>
+            </div>
+        </div>
+        <div class="comment-right">
+            <img src="{% static 'icons/heart.png' %}" alt="좋아요 버튼" />
+        </div>
+    </div>
+    <div class="comment">
+        <div class="comment-left">
+            <img src="{% static 'images/profilePicture.png' %}" alt="유저 이미지" >
+            <div class="comment-content">
+                <p class="comment-id">Pirogrammer</p>
+                <p class="comment-content">피로그래밍 짱이야!</p>
+            </div>
+        </div>
+        <div class="comment-right">
+            <img src="{% static 'icons/heart.png' %}" alt="좋아요 버튼" />
+        </div>
+    </div>
+    <div class="comment-input">
+        <input type="text" placeholder="댓글 달기..." />
+        <button>
+            <img src="{% static 'icons/send.png' %}" alt="댓글 전송 버튼" />
+        </button>
+    </div>
+
+{% endblock %}

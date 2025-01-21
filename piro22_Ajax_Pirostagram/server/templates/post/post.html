@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="{%static 'css/post.css'%}">
+    <title>Pirostagram</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <button class="header__goBackButton">
+            <a href="{% url 'main:main' %}">
+              <img src="{%static 'icons/goBack.svg'%}" alt="뒤로 가기 버튼" />
+            </a>
+        </button>
+        <div class="header__username">Pirogramming</div>
+        <div class="header__rightButtons">
+          <button class="header__alarmButton">
+            <img src="{%static 'icons/alarm.svg'%}" alt="알림 열기 버튼" />
+          </button>
+          <button class="header__moreButton">
+            <img src="{%static 'icons/more.svg'%}" alt="더보기 열기 버튼" />
+          </button>
+        </div>
+      </header>
+      <main>
+        {% for post in posts %}
+          <div class="post-container post-id-{{ post.id }}">
+            <div class="post-header">
+                <div class="post-header-left">
+                    <div class="profile__image">
+                        <img src="{% static 'images/profilePicture.png' %}" alt="유저 이미지" >
+                    </div>
+                    <p class="user-id">Pirogrammer</p>
+                </div>
+              <div class="more">
+                <img src="{% static 'icons/more.svg' %}" alt="더보기 버튼" />
+              </div>
+            </div>
+            <div class="post-img">
+              <img src="{% static 'images/pirogramming.jpeg' %}" alt="" class="post-photo">
+            </div>
+            <div class="post-btn">
+              <div class="btn-3">
+                <button class="like" data-id="{{ post.id }}" data-liked="{{ post.likes }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" 
+                        class="heart-icon" 
+                        style="fill: {% if post.likes == 1 %}red{% else %}none{% endif %};
+                               stroke: {% if post.likes == 1 %}red{% else %}white{% endif %};">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </button>
+                <button class="comment-btn" data-id="{{ post.id }}">
+                    <img src="{% static 'icons/comment.png' %}" alt="댓글 버튼" />
+                </button>
+                <button class="send">
+                    <img src="{% static 'icons/send.png' %}" alt="공유 버튼" />
+                </button>
+              </div>
+              <button class="save">
+                <img src="{% static 'icons/bookmark.png' %}" alt="저장 버튼" />
+              </button>
+            </div>
+            <div class="post-content">
+              {% if post.likes == 1 %}
+                <p>Pirogramming 님이 좋아합니다.</p>
+              {% else %}
+                <p></p>
+              {% endif %}
+              <p>Pirogrammer {{ post.title }}</p>
+              <a href="#">댓글 모두 보기</a>
+              <p class ="content-date">{{ post.created_at|date:"Y년 m월 d일" }}</p>
+            </div>
+            
+            <!-- 댓글 창 컨테이너 -->
+            <div class="comments-container" id="comments-{{ post.id }}" style="display: none;">
+                <div class="comments-list">
+                <!-- 댓글이 동적으로 추가될 부분 -->
+                </div>
+                <div class="add-comment">
+                <input type="text" id="comment-input-{{ post.id }}" placeholder="댓글을 입력하세요" />
+                <button class="add-comment-btn" data-id="{{ post.id }}">
+                    <img src="{% static 'icons/send.png' %}" alt="댓글 전송 버튼" />
+                </button>
+                </div>
+            </div>
+          </div>
+        {% endfor %}
+      </main>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const csrfToken = "{{ csrf_token }}";
+    document.querySelectorAll('.like').forEach(likeBtn => {
+        likeBtn.addEventListener('click', async () => {
+            const postId = likeBtn.dataset.id;
+            const isLiked = likeBtn.dataset.liked === '1'; // 현재 상태 확인
+    
+            try {
+                const response = await axios.post('/posts/like_ajax/', { id: postId }, {
+                    headers: {
+                        "X-CSRFToken": csrfToken, // CSRF 토큰 추가
+                        "X-Requested-With": "XMLHttpRequest" // AJAX 요청임을 명시
+                    }
+                });
+                const data = response.data;
+    
+                // 하트 색상 업데이트
+                const heartIcon = likeBtn.querySelector('.heart-icon');
+                if (data.liked) {
+                    heartIcon.style.fill = 'red';
+                    heartIcon.style.stroke = 'red';
+                } else {
+                    heartIcon.style.fill = 'none';
+                    heartIcon.style.stroke = 'white';
+                }
+    
+                // 데이터 속성 업데이트
+                likeBtn.dataset.liked = data.liked ? '1' : '0';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+
+    {% comment %} 댓글 버튼 클릭 시 댓글 데이터를 가져와서 댓글 창에 표시 {% endcomment %}
+    document.querySelectorAll('.comment-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const postId = button.dataset.id;
+            const commentsContainer = document.getElementById(`comments-${postId}`);
+            const commentsList = commentsContainer.querySelector('.comments-list');
+    
+            if (commentsContainer.style.display === 'block') {
+                commentsContainer.style.display = 'none';
+                return;
+            }
+    
+            try {
+                const response = await axios.get(`/posts/${postId}/comments/`);
+                const comments = response.data;
+    
+                commentsList.innerHTML = comments.map(comment => `
+                    <div class="comment" id="comment-${comment.id}">
+                        <p><strong>${comment.user}</strong>: ${comment.text}</p>
+                        <button class="delete-comment-btn" data-comment-id="${comment.id}" data-post-id="${postId}">
+                            <img src="{% static 'icons/trash.png' %}" class="delete-comment-btn" data-comment-id="${comment.id}" data-post-id="${postId}" alt="삭제 버튼" />
+                        </button>
+                    </div>
+                `).join('');
+    
+                commentsContainer.style.display = 'block';
+    
+                // 이벤트 위임 방식으로 삭제 처리
+                commentsList.addEventListener('click', async (event) => {
+                    if (event.target.classList.contains('delete-comment-btn')) {
+                        const deleteBtn = event.target;
+                        const commentId = deleteBtn.dataset.commentId;
+                        const postId = deleteBtn.dataset.postId;
+    
+                        if (!commentId || !postId) {
+                            console.error("댓글 ID 또는 게시물 ID가 없습니다.");
+                            return;
+                        }
+    
+                        try {
+                            await axios.delete(`/posts/${postId}/comments/${commentId}/`, {
+                                headers: { "X-CSRFToken": csrfToken },
+                            });
+                            deleteBtn.closest('.comment').remove(); // 댓글 삭제
+                        } catch (error) {
+                            console.error('Error deleting comment:', error);
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading comments:', error);
+            }
+        });
+    });
+
+    // 댓글 추가 로직
+    document.querySelectorAll('.add-comment-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const postId = button.dataset.id;
+            const inputField = document.getElementById(`comment-input-${postId}`);
+            const commentsList = document.getElementById(`comments-${postId}`).querySelector('.comments-list');
+            const text = inputField.value.trim();
+            const userName = "Pirogramming"; // 고정된 사용자 이름
+
+            if (!text) {
+                alert('댓글을 입력하세요!');
+                return;
+            }
+
+            try {
+                // 댓글 추가 요청
+                const response = await axios.post(`/posts/${postId}/comments/`, {
+                    text,
+                    user: userName,
+                });
+                const comment = response.data;
+
+                if (!comment || !comment.text) {
+                    throw new Error("댓글 데이터를 가져오지 못했습니다.");
+                }
+
+                // 댓글 추가
+                const newCommentHTML = `
+                    <div class="comment">
+                        <p><strong>${comment.user}</strong>: ${comment.text}</p>
+                        <button class="delete-comment-btn" data-comment-id="${comment.id}" data-post-id="${postId}">
+                            <img src="{% static 'icons/trash.png' %}" class="delete-comment-btn" data-comment-id="${comment.id}" data-post-id="${postId}" alt="삭제 버튼" />
+                        </button>
+                    </div>
+                `;
+                commentsList.innerHTML += newCommentHTML; // 새 댓글 추가
+                inputField.value = ''; // 입력창 초기화
+            } catch (error) {
+                console.error('Error adding comment:', error);
+                alert("댓글 추가 중 오류가 발생했습니다. 다시 시도해주세요.");
+            }
+        });
+    });
+    </script>
+</html>

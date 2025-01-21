@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--padding) var(--gutter);
+}
+
+.header__rightButtons {
+  display: flex;
+  gap: var(--padding);
+}
+
+.header__username {
+  font-size: var(--heading);
+}
